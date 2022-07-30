@@ -18,6 +18,7 @@
     ((eql :int16) '(signed-byte 16))
     ((eql :int32) '(signed-byte 32))
     ((eql :int64) '(signed-byte 64))
+    ((eql :payload) T)
     (cons (ecase (first type)
             (object T)
             (map T)
@@ -29,6 +30,7 @@
     ((eql :float) 0f0)
     ((eql :double) 0d0)
     ((member :uint8 :uint16 :uint32 :uint64 :int8 :int16 :int32 :int64) 0)
+    ((eql :payload) NIL)
     (cons (ecase (first type)
             (object NIL)
             (map NIL)
@@ -37,6 +39,8 @@
 
 (defun slot-type-parser (type)
   (etypecase type
+    (real type)
+    ((eql :payload) `(pos))
     (keyword `(ref ,type))
     (symbol type)
     (cons (case (first type)
@@ -56,6 +60,8 @@
 
 (defun slot-type-writer (name type)
   (etypecase type
+    (real)
+    ((eql :payload) `(write-payload io))
     (keyword `(set ,type ,name))
     (symbol)
     (cons (case (first type)

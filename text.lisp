@@ -42,18 +42,19 @@
                  (#x34 :EUC-TW)
                  (#x05 :SJIS)
                  (#x15 :Big5)
-                 (#x25 :GBK))))
+                 (#x25 :GBK)))
+  (payload :payload))
 
 (defun text-string (text)
   (let ((io (io text)))
     (etypecase io
       (pointer-io
        (cffi:foreign-string-to-lisp
-        (pointer io) :offset (+ 11 (start io)) :count (- (end io) (start io) 11)
+        (pointer io) :offset (text-payload text) :count (- (end io) (text-payload text))
                      :encoding (text-encoding text)))
       (vector-io
        (babel:octets-to-string
-        (vector io) :start (+ 11 (start io)) :end (end io)
+        (vector io) :start (text-payload text) :end (end io)
                     :encoding (text-encoding text)))
       (file-stream
        ;; FIXME: do it

@@ -31,5 +31,29 @@
                       (#x06 '(:albedo :normal :metalness :roughness :occlusion :emission))))
   (material-size :uint32)
   (count :uint32)
-  (textures (vector (length material-type) (string :uint16))))
+  (textures (vector (length material-type) (string :uint16)))
+  (payload :payload))
 
+(defun model-face-data (model)
+  (let ((io (io model))
+        (size (* (model-count model) 4)))
+    (etypecase io
+      (pointer-io
+       (values (cffi:inc-pointer (pointer io) (model-payload model)) size))
+      (vector-io
+       (values (vector io) (model-payload model) (+ (model-payload model) size)))
+      (file-stream
+       (file-position io (model-payload model))
+       (values io size)))))
+
+(defun model-vertex-data (model)
+  (let ((io (io model))
+        (start (+ (model-payload model) (* (model-count model) 4))))
+    (etypecase io
+      (pointer-io
+       (values (cffi:inc-pointer (pointer io) start) (- (end io) start)))
+      (vector-io
+       (values (vector io) start (end io)))
+      (file-stream
+       (file-position io start)
+       (values io (- (file-length io) start))))))

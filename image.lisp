@@ -31,5 +31,20 @@
                (#x18 :uint64)
                (#x22 :float16)
                (#x24 :float32)
-               (#x28 :float64))))
+               (#x28 :float64)))
+  (payload :payload))
 
+(defun image-data (image)
+  (let ((io (io image)))
+    (etypecase io
+      (pointer-io
+       (values (cffi:inc-pointer (pointer io) (image-payload image))
+               (- (end io) (image-payload image))))
+      (vector-io
+       (values (vector io)
+               (image-payload image)
+               (end io)))
+      (file-stream
+       (file-position io (image-payload image))
+       (values io
+               (- (file-length io) (image-payload image)))))))

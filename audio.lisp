@@ -20,4 +20,20 @@
                (#x18 :uint64)
                (#x22 :float16)
                (#x24 :float32)
-               (#x28 :float64))))
+               (#x28 :float64)))
+  (payload :payload))
+
+(defun audio-data (audio)
+  (let ((io (io audio)))
+    (etypecase io
+      (pointer-io
+       (values (cffi:inc-pointer (pointer io) (audio-payload audio))
+               (- (end io) (audio-payload audio))))
+      (vector-io
+       (values (vector io)
+               (audio-payload audio)
+               (end io)))
+      (file-stream
+       (file-position io (audio-payload audio))
+       (values io
+               (- (file-length io) (audio-payload audio)))))))

@@ -7,5 +7,6 @@
 (in-package #:org.shirakumo.sf3)
 
 (define-file-type log #x05
-  (start-time :uint64))
+  (start-time :uint64)
+  (payload :payload))
 

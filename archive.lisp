@@ -18,4 +18,18 @@
   (metadata-size :uint64)
   (entry-offsets (vector count :uint64))
   (metadata (vector count (object archive-entry)))
-  (file-offsets (vector count :uint64)))
+  (file-offsets (vector count :uint64))
+  (payload :payload))
+
+(defun archive-file-data (archive file-index)
+  (let* ((io (io archive))
+         (start (+ (start io) (aref (archive-file-offsets archive) file-index)))
+         (end (+ (start io) (aref (archive-file-offsets archive) (1+ file-index)))))
+    (etypecase io
+      (pointer-io
+       (values (cffi:inc-pointer (pointer io) start) (- start end)))
+      (vector-io
+       (values (vector io) start end))
+      (file-stream
+       (file-position io start)
+       (values io (- start end))))))
