@@ -11,15 +11,15 @@
             (:copier NIL)
             (:predicate NIL)
             (:conc-name NIL))
-  (start 0 :type (unsigned-byte 64) :read-only T)
-  (end 0 :type (unsigned-byte 64) :read-only T)
+  (start 0 :type (unsigned-byte 64))
+  (end 0 :type (unsigned-byte 64))
   (offset start :type (unsigned-byte 64)))
 
 (defstruct (pointer-io
             (:include io)
             (:constructor make-pointer-io (pointer start end))
             (:conc-name NIL))
-  (pointer (cffi:null-pointer) :type cffi:foreign-pointer :read-only T))
+  (pointer (cffi:null-pointer) :type cffi:foreign-pointer))
 
 (defstruct (mmap-io
             (:include pointer-io)

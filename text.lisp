@@ -57,5 +57,28 @@
         (vector io) :start (text-payload text) :end (end io)
                     :encoding (text-encoding text)))
       (file-stream
-       ;; FIXME: do it
-       ))))
+       (let ((octets (make-array (- (end io) (+ (start io) 11)) :element-type '(unsigned-byte 8))))
+         (declare (dynamic-extent octets))
+         (file-position io (text-payload text))
+         (read-sequence octets io)
+         (babel:octets-to-string octets :encoding (text-encoding text)))))))
+
+(defun (setf text-string) (string text)
+  (let ((io (io text)))
+    (etypecase io
+      (pointer-io
+       (cffi:lisp-string-to-foreign
+        strin (pointer io) :offset (text-payload text)
+                           :encoding (text-encoding text)))
+      (vector-io
+       (let ((encoded (babel:string-to-octets string :encoding (text-encoding text))))
+         (when (and (adjustable-array-p (vector io))
+                    ;; Only do this if we aren't pointing into some other compacted vector
+                    (= (length (vector io)) (end io))
+                    (= 0 (start io)))
+           (adjust-array (vector io) (+ 11 (length encoded)))
+           (setf (end io) (length (vector io))))
+         (replace (vector io) encoded :start1 (text-payload text) :end1 (end io))))
+      (file-stream
+       (file-position io (text-payload text))
+       (write-sequence (babel:string-to-octets string :encoding (text-encoding text)) io)))))
