@@ -29,7 +29,7 @@
   (meta-size uint64)
   (meta-offsets (vector uint64 (bs:slot count)))
   (meta-entries (vector archive-meta-entry (bs:slot count) (aref (bs:slot meta-offsets) bs:i)))
-  (file-offsets (vector uint64 (bs:slot count)))
+  (file-offsets (vector uint64 (bs:slot count)) :offset (+ 8 8 (bs:slot meta-size)))
   (files (vector (vector uint8 uint64) (bs:slot count) (aref (bs:slot file-offsets) bs:i))))
 
 (define-print-method archive "~d" count)

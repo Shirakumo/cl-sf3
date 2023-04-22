@@ -6,7 +6,7 @@
 
 (defpackage #:org.shirakumo.sf3
   (:use #:cl #:org.shirakumo.binary-structures.types)
-  (:shadow #:log #:read-line #:write-line)
+  (:shadow #:log #:read-line #:write-line #:time)
   (:local-nicknames
    (#:bs #:org.shirakumo.binary-structures))
   (:export

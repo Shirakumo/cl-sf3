@@ -16,6 +16,7 @@
   :serial T
   :components ((:file "package")
                (:file "io-types")
+               (:file "convenience")
                (:file "documentation"))
   :depends-on (:binary-structures
                :documentation-utils)
