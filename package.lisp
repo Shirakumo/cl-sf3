@@ -5,8 +5,8 @@
 |#
 
 (defpackage #:org.shirakumo.sf3
-  (:use #:cl)
-  (:shadow #:vector #:set #:log #:write-string)
+  (:use #:cl #:org.shirakumo.binary-structures.types)
+  (:shadow #:log #:read-line #:write-line)
   (:local-nicknames
-   (#:mmap #:org.shirakumo.fraf.trial.mmap))
+   (#:bs #:org.shirakumo.binary-structures))
   (:export))

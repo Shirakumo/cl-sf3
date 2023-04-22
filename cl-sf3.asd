@@ -15,21 +15,8 @@
   :source-control (:git "https://github.com/shirakumo/sf3.git")
   :serial T
   :components ((:file "package")
-               (:file "toolkit")
-               (:file "type-info")
-               (:file "io")
-               (:file "parsed-struct")
-               (:file "base")
-               (:file "text")
-               (:file "image")
-               (:file "audio")
-               (:file "model")
-               (:file "archive")
-               (:file "log")
-               (:file "vector-graphic")
+               (:file "io-types")
                (:file "documentation"))
-  :depends-on (:nibbles
-               :cffi
-               :mmap
+  :depends-on (:binary-structures
                :documentation-utils)
   :in-order-to ((asdf:test-op (asdf:test-op :sf3-test))))
