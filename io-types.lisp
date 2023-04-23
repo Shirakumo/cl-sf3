@@ -99,7 +99,7 @@
 (bs:define-io-structure log-entry
   (size uint32)
   (time uint64)
-  (severity int8)
+  (severity sint8)
   (source (string uint8))
   (category (string uint8))
   (message (string uint16)))
@@ -120,7 +120,7 @@
   (chunk-count uint16)
   (chunks (vector log-chunk (bs:slot chunk-count))))
 
-(define-print-method log "~a ~d" (format-time (start-time object)) chunk-count)
+(define-print-method log "~a ~d" (format-time (log-start-time object)) chunk-count)
 
 (bs:define-io-structure model
   (format uint8)
@@ -159,46 +159,52 @@
 
 (define-print-method model "~a ~d" (vertex-attributes object) (length (model-vertices object)))
 
-(bs:define-io-structure text
-  (encoding (case uint8
-              (#x00 :ascii)
-              (#x01 :utf-8)
-              (#x11 :utf-16)
-              (#x21 :utf-32)
-              (#x02 :iso-8859-1)
-              (#x12 :iso-8859-2)
-              (#x22 :iso-8859-3)
-              (#x32 :iso-8859-4)
-              (#x42 :iso-8859-5)
-              (#x52 :iso-8859-6)
-              (#x62 :iso-8859-7)
-              (#x72 :iso-8859-8)
-              (#x82 :iso-8859-9)
-              (#x92 :iso-8859-10)
-              (#xa2 :iso-8859-11)
-              (#xb2 :iso-8859-12)
-              (#xc2 :iso-8859-13)
-              (#xd2 :iso-8859-14)
-              (#xe2 :iso-8859-15)
-              (#xf2 :iso-8859-16)
-              (#x03 :windows-874)
-              (#x13 :windows-1250)
-              (#x23 :windows-1251)
-              (#x33 :windows-1252)
-              (#x43 :windows-1253)
-              (#x53 :windows-1254)
-              (#x63 :windows-1255)
-              (#x73 :windows-1256)
-              (#x04 :euc-cn)
-              (#x14 :euc-jp)
-              (#x24 :euc-kr)
-              (#x34 :euc-tw)
-              (#x05 :sjis)
-              (#x15 :big5)
-              (#x25 :gbk)))
-  (text (string * (bs:slot encoding))))
+(bs:define-io-structure color-option
+  (r float32)
+  (g float32)
+  (b float32))
 
-(define-print-methodm text "~a" (text-encoding text))
+(define-print-method color-option "~,2f ~,2f ~,2f" r g b)
+
+(bs:define-io-structure size-option
+  (size float32))
+
+(define-print-method size-option "~,2f" size)
+
+(bs:define-io-structure heading-option
+  (level uint8))
+
+(define-print-method heading-option "~d" level)
+
+(bs:define-io-structure link-option
+  (address (string uint16)))
+
+(define-print-method link-option "~a" address)
+
+(bs:define-io-structure target-option
+  (address (string uint16)))
+
+(define-print-method target-option "~a" address)
+
+(bs:define-io-alias markup-option
+  (case uint8
+    (#x01 :bold)
+    (#x02 :italic)
+    (#x03 :underline)
+    (#x04 :strike)
+    (#x05 :mono)
+    (#x06 color-option)
+    (#x07 size-option)
+    (#x08 heading-option)
+    (#x09 link-option)
+    (#x0A target-option)))
+
+(bs:define-io-structure text
+  (markup-size uint64)
+  (markup-options (vector markup-option uint32))
+  (text (string uint64) :offset (+ 8 (bs:slot markup-size))))
+
+(define-print-method text "~a" text)
 
 (bs:define-io-structure color
   (r float32)
@@ -283,4 +289,4 @@
                           (#x12 (vector float32 6))) 
                         (bs:slot count))))
 
-(define-print-method vector-graphic "~dx~d ~d" width height (length (vector-graphic-count object)))
+(define-print-method vector-graphic "~dx~d ~d" width height (vector-graphic-count object))
