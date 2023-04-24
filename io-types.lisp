@@ -297,3 +297,25 @@
                         (bs:slot count))))
 
 (define-print-method vector-graphic "~dx~d ~d" width height (vector-graphic-count object))
+
+(bs:define-io-structure sf3-file-header
+  #(#x81 #x53 #x46 #x33 #x00 #xE0 #xD0 #x0D #x0A #x0A)
+  (type (case uint8
+          (1 'archive)
+          (2 'audio)
+          (3 'image)
+          (4 'log)
+          (5 'model)
+          (6 'text)
+          (7 'vector-graphic))))
+
+(bs:define-io-structure sf3-file
+  (:include sf3-file-header)
+  (content (case (bs:slot type)
+             (archive archive)
+             (audio audio)
+             (image image)
+             (log log)
+             (model model)
+             (text text)
+             (vector-graphic vector-graphic))))

@@ -12,29 +12,18 @@
   (:export
    #:archive-meta-entry
    #:archive
-   #:read-archive
-   #:write-archive
    #:audio
-   #:read-audio
-   #:write-audio
    #:image
-   #:read-image
-   #:write-image
    #:log-entry
-   #:read-log-entry
-   #:write-log-entry
    #:log-chunk
-   #:read-log-chunk
-   #:write-log-chunk
    #:log
-   #:read-log
-   #:write-log
    #:model
-   #:read-model
-   #:write-model
+   #:color-option
+   #:size-option
+   #:heading-option
+   #:link-option
+   #:target-option
    #:text
-   #:read-text
-   #:write-text
    #:color
    #:point
    #:size
@@ -45,5 +34,4 @@
    #:curve
    #:text-shape
    #:vector-graphic
-   #:read-vector-graphic
-   #:write-vector-graphic))
+   #:sf3-file))
