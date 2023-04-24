@@ -32,7 +32,7 @@
 (define-accessors log-chunk size entries)
 (define-accessors log start-time chunks)
 (define-accessors model textures faces vertices)
-(define-accessors color-option color)
+(define-accessors color-option r g b)
 (define-accessors size-option size)
 (define-accessors heading-option level)
 (define-accessors link-option address)
@@ -83,4 +83,4 @@
 
 (defun tell-sf3 (storage &rest args)
   (let ((values (multiple-value-list (apply #'read-sf3-file-header storage args))))
-    (values-list (list* (sf3-file-header-type (first values)) values))))
+    (values-list (list* (sf3-file-header-type (first values)) (rest values)))))
