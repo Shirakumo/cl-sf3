@@ -51,7 +51,8 @@
 (bs:define-io-structure audio
   (samplerate uint32)
   (channels uint8)
-  (format format)
+  (sample-format format)
+  (frame-count uint64)
   (samples (vector (case (bs:slot format)
                      (#x01 sint8)
                      (#x02 sint16)
@@ -61,11 +62,17 @@
                      (#x12 uint16)
                      (#x14 uint32)
                      (#x18 uint64)
-                     (#x22 float16)
                      (#x24 float32)
-                     (#x28 float64)))))
+                     (#x28 float64))
+                   (the bs::index (* (bs:slot frame-count) (bs:slot channels))))))
 
-(define-print-method audio "~dx~a @~dHz" channels format samplerate)
+(defun duration (audio)
+  (float (/ (audio-frame-count audio)
+            (audio-samplerate audio))))
+
+(define-print-method audio "~d:~2,'0d ~dx~a @~dHz"
+  (floor (duration object) 60) (mod (ceiling (duration object)) 60)
+  channels sample-format samplerate)
 
 (bs:define-io-structure image
   (width uint32)
