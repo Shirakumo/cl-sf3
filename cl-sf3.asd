@@ -15,6 +15,7 @@
   :source-control (:git "https://github.com/shirakumo/sf3.git")
   :serial T
   :components ((:file "package")
+               (:file "toolkit")
                (:file "io-types")
                (:file "convenience")
                (:file "documentation"))

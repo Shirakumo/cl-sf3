@@ -6,24 +6,6 @@
 
 (in-package #:org.shirakumo.sf3)
 
-(defmacro define-accessor (name type &optional (slot name))
-  `(progn (defmethod ,name ((entry ,type))
-            (,(intern (format NIL "~a-~a" type slot)) entry))
-          (defmethod (setf ,name) (value (entry ,type))
-            (setf (,(intern (format NIL "~a-~a" type slot)) entry) value))))
-
-(defmacro define-accessors (type &rest names)
-  `(progn ,@(loop for name in names 
-                  for (n s) = (if (listp name) name (list name name))
-                  collect `(define-accessor ,n ,type ,s))))
-
-(defmacro define-delegates (type slot &rest delegates)
-  `(progn ,@(loop for delegate in delegates
-                  collect `(defmethod ,delegate ((entry ,type))
-                             (,delegate (,(intern (format NIL "~a-~a" type slot)) entry)))
-                  collect `(defmethod (setf ,delegate) (value (entry ,type))
-                             (setf (,delegate (,(intern (format NIL "~a-~a" type slot)) entry)) value)))))
-
 (define-accessors archive-meta-entry modification-time checksum mime-type path)
 (define-accessors archive meta-entries files)
 (define-accessors audio samplerate channels sample-format samples)
@@ -52,6 +34,40 @@
 (define-accessors sf3-file content)
 
 (define-delegates sf3-file content modification-time checksum mime-type path meta-entries files samplerate channels sample-format samples width height depth data size time severity source category message entries start-time chunks textures faces vertices color level address markup text r g b a x y w h thickness points fill-color outline-color outline-thickness location font font-size instructions)
+
+(defmethod add-file ((file pathname) (archive archive) &key (mime-type "application/octet-stream")
+                                                            (path (file-namestring file)))
+  (let ((entry (make-archive-meta-entry :modification-time (file-write-date file)
+                                        :checksum (crc32 file)
+                                        :mime-type mime-type
+                                        :path path)))
+    (vector-push-extend (archive-meta-size archive) (archive-meta-offsets archive))
+    (vector-push-extend entry (archive-meta-entries archive))
+    (incf (archive-meta-size archive) (bs:octet-size entry))
+    (vector-push-extend (if (< 0 (archive-count archive))
+                            (+ (aref (archive-file-offsets archive) (1- (archive-count archive)))
+                               (length (aref (archive-files archive) (1- (archive-count archive)))))
+                            0)
+                        (archive-file-offsets archive))
+    (vector-push-extend (alexandria:read-file-into-byte-vector file)
+                        (archive-files archive))
+    (incf (archive-count archive))))
+
+(defmethod extract-file ((file integer) (archive archive) &key path (if-exists :error) (verify T))
+  (let* ((meta (aref (archive-meta-entries archive) file))
+         (path (or path (archive-meta-entry-path meta))))
+    (alexandria:write-byte-vector-into-file (aref (archive-files archive) file) path :if-exists if-exists)
+    (when verify (assert (= (archive-meta-entry-checksum meta) (crc32 path))))))
+
+(defmethod extract-file ((all (eql T)) (archive archive) &key path (if-exists :error) (verify T))
+  (loop with metas = (archive-meta-entries archive)
+        with files = (archive-files archive)
+        for i from 0 below (archive-count archive)
+        for meta = (aref metas i)
+        for bytes = (aref files i)
+        for file-path = (merge-pathnames (archive-meta-entry-path meta) path)
+        do (alexandria:write-byte-vector-into-file bytes file-path :if-exists if-exists)
+           (when verify (assert (= (archive-meta-entry-checksum meta) (crc32 file-path))))))
 
 (defgeneric file-extension (object)
   (:method ((_ sf3-file)) (mime-type (sf3-file-content _)))

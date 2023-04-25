@@ -11,29 +11,53 @@
    (#:bs #:org.shirakumo.binary-structures))
   (:export
    #:archive-meta-entry
+   #:make-archive-meta-entry
    #:archive
+   #:make-archive
    #:audio
+   #:make-audio
    #:image
+   #:make-image
    #:log-entry
+   #:make-log-entry
    #:log-chunk
+   #:make-log-chunk
    #:log
+   #:make-log
    #:model
+   #:make-model
    #:color-option
+   #:make-color-option
    #:size-option
+   #:make-size-option
    #:heading-option
+   #:make-heading-option
    #:link-option
+   #:make-link-option
    #:target-option
+   #:make-target-option
    #:text
+   #:make-text
    #:color
+   #:make-color
    #:point
+   #:make-point
    #:size
+   #:make-size
    #:line
+   #:make-line
    #:rectangle
+   #:make-rectangle
    #:circle
+   #:make-circle
    #:polygon
+   #:make-polygon
    #:curve
+   #:make-curve
    #:text-shape
+   #:make-text-shape
    #:vector-graphic
+   #:make-vector-graphic
    #:sf3-file)
   (:export
    #:medification-time

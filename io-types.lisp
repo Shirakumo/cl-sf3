@@ -6,16 +6,6 @@
 
 (in-package #:org.shirakumo.sf3)
 
-(defun format-time (&optional (timestamp (get-universal-time)))
-  (multiple-value-bind (s m h dd mm yy) (decode-universal-time (+ timestamp (encode-universal-time 0 0 0 1 1 1970 0)))
-    (format NIL "~4,'0d-~2,'0d-~2,'0d ~2,'0d:~2,'0d:~2,'0d" yy mm dd h m s)))
-
-(defmacro define-print-method (class format &rest format-args)
-  `(defmethod print-object ((object ,class) stream)
-     (print-unreadable-object (object stream :type T)
-       (format stream ,format ,@(loop for arg in format-args
-                                      collect (if (symbolp arg) `(slot-value object ',arg) arg))))))
-
 (bs:define-io-structure archive-meta-entry
   (modification-time uint64)
   (checksum uint32)
