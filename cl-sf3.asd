@@ -16,9 +16,17 @@
   :serial T
   :components ((:file "package")
                (:file "toolkit")
-               (:file "io-types")
-               (:file "convenience")
+               (:file "archive")
+               (:file "audio")
+               (:file "image")
+               (:file "log")
+               (:file "model")
+               (:file "text")
+               (:file "vector-graphic")
+               (:file "sf3")
                (:file "documentation"))
   :depends-on (:binary-structures
+               :pathname-utils
+               :filesystem-utils
                :documentation-utils)
   :in-order-to ((asdf:test-op (asdf:test-op :sf3-test))))
