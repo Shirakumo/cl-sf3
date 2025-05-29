@@ -1,14 +1,8 @@
-#|
- This file is a part of SF3
- (c) 2022 Shirakumo http://tymoon.eu (shinmera@tymoon.eu)
- Author: Nicolas Hafner <shinmera@tymoon.eu>
-|#
-
 (asdf:defsystem cl-sf3
   :version "1.0.0"
   :license "zlib"
-  :author "Nicolas Hafner <shinmera@tymoon.eu>"
-  :maintainer "Nicolas Hafner <shinmera@tymoon.eu>"
+  :author "Yukari Hafner <shinmera@tymoon.eu>"
+  :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
   :description "A library to parse and create SF3 files."
   :homepage "https://shirakumo.github.io/sf3/"
   :bug-tracker "https://github.com/shirakumo/sf3/issues"
@@ -21,6 +15,8 @@
                (:file "image")
                (:file "log")
                (:file "model")
+               (:file "physics-model")
+               (:file "table")
                (:file "text")
                (:file "vector-graphic")
                (:file "sf3")

@@ -1,21 +1,19 @@
-#|
- This file is a part of SF3
- (c) 2022 Shirakumo http://tymoon.eu (shinmera@tymoon.eu)
- Author: Nicolas Hafner <shinmera@tymoon.eu>
-|#
-
 (in-package #:org.shirakumo.sf3)
 
 (bs:define-io-structure sf3-file-header
   #(#x81 #x53 #x46 #x33 #x00 #xE0 #xD0 #x0D #x0A #x0A)
+  (checksum 'uint32)
   (type (case uint8
           (1 'archive)
           (2 'audio)
           (3 'image)
           (4 'log)
           (5 'model)
-          (6 'text)
-          (7 'vector-graphic))))
+          (6 'physics-model)
+          (7 'table)
+          (8 'text)
+          (9 'vector-graphic)))
+  #(#x00))
 
 (bs:define-io-structure sf3-file
   (:include sf3-file-header)
@@ -25,6 +23,8 @@
              (image image)
              (log log)
              (model model)
+             (physics-model physics-model)
+             (table table)
              (text text)
              (vector-graphic vector-graphic))))
 
@@ -39,6 +39,8 @@
   (:method ((_ image)) "img.sf3")
   (:method ((_ log)) "log.sf3")
   (:method ((_ model)) "mod.sf3")
+  (:method ((_ physics-model)) "phys.sf3")
+  (:method ((_ table)) "tab.sf3")
   (:method ((_ text)) "txt.sf3")
   (:method ((_ vector-graphic)) "vec.sf3"))
 
@@ -49,6 +51,8 @@
   (:method ((_ image)) "image/x.sf3")
   (:method ((_ log)) "application/x.sf3-log")
   (:method ((_ model)) "model/x.sf3")
+  (:method ((_ physics-model)) "model/x.sf3-physics")
+  (:method ((_ table)) "application/x.sf3-table")
   (:method ((_ text)) "text/x.sf3")
   (:method ((_ vector-graphic)) "image/x.sf3-vector"))
 
