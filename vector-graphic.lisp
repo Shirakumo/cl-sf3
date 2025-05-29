@@ -20,47 +20,49 @@
 
 (define-print-method size "~,2f ~,2f" w h)
 
-(bs:define-io-structure line
-  (color color)
-  (thickness float32)
-  (points (vector point uint16)))
-
-(define-print-method line "~f ~d" thickness (length (line-points object)))
-
-(bs:define-io-structure filled-shape
+(bs:define-io-structure shape-fill
   (fill-color color)
   (outline-color color)
   (outline-thickness float32))
 
-(bs:define-io-structure rectangle
-  (:include filled-shape)
-  (location point)
+(bs:define-io-structure shape-bounds
+  (point point)
   (size size))
+
+(bs:define-io-structure line
+  (points (vector point uint16))
+  (color color)
+  (thickness float32))
+
+(define-print-method line "~f ~d" thickness (length (line-points object)))
+
+(bs:define-io-structure rectangle
+  (bounds shape-bounds)
+  (fill shape-fill))
 
 (define-print-method rectangle "~a ~a" location size)
 
 (bs:define-io-structure circle
-  (:include filled-shape)
-  (location point)
-  (size size))
+  (bounds shape-bounds)
+  (fill shape-fill))
 
 (define-print-method circle "~a ~a" location size)
 
 (bs:define-io-structure polygon
-  (:include filled-shape)
-  (points (vector point uint16)))
+  (points (vector point uint16))
+  (fill shape-fill))
 
 (define-print-method polygon "~d" (length (polygon-points object)))
 
 (bs:define-io-structure curve
-  (:include filled-shape)
-  (points (vector point uint16)))
+  (points (vector point uint16))
+  (fill shape-fill))
 
 (define-print-method curve "~d" (length (curve-points object)))
 
 (bs:define-io-structure text-shape
+  (point point)
   (color color)
-  (location point)
   (font (string uint16))
   (font-size float32)
   (text (string uint16)))
@@ -70,7 +72,6 @@
 (bs:define-io-structure vector-graphic
   (width uint32)
   (height uint32)
-  (count uint32)
   (instructions (vector (case uint8
                           (#x01 line)
                           (#x02 rectangle)
@@ -81,18 +82,19 @@
                           (#x11 #.(make-array 6 :element-type 'single-float :initial-contents
                                               '(1f0 0f0 0f0 0f0 1f0 0f0)))
                           (#x12 (vector float32 6))) 
-                        (bs:slot count))))
+                        uint32)))
 
 (define-print-method vector-graphic "~dx~d ~d" width height (vector-graphic-count object))
 
 (define-accessors color r g b a)
 (define-accessors point x y)
 (define-accessors size w h (width w) (height h))
-(define-accessors line color thickness points)
-(define-accessors filled-shape fill-color outline-color outline-thickness)
-(define-accessors rectangle location size)
-(define-accessors circle location size)
-(define-accessors polygon points)
-(define-accessors curve points)
-(define-accessors text-shape color location font font-size text)
+(define-accessors shape-fill fill-color outline-color outline-thickness)
+(define-accessors shape-bounds point size)
+(define-accessors line points thickness color)
+(define-accessors rectangle bounds fill)
+(define-accessors circle bounds fill)
+(define-accessors polygon points fill)
+(define-accessors curve points fill)
+(define-accessors text-shape point color font font-size text)
 (define-accessors vector-graphic width height instructions)

@@ -3,7 +3,7 @@
 (bs:define-io-structure log-entry
   (size uint32)
   (time uint64)
-  (severity sint8)
+  (severity int8)
   (source (string uint8))
   (category (string uint8))
   (message (string uint16)))
@@ -20,7 +20,7 @@
 (define-print-method log-chunk "~d" entry-count)
 
 (bs:define-io-structure log
-  (start-time uint64)
+  (start-time int64)
   (chunk-count uint16)
   (chunks (vector log-chunk (bs:slot chunk-count))))
 
