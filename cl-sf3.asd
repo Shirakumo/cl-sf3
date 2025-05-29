@@ -4,9 +4,9 @@
   :author "Yukari Hafner <shinmera@tymoon.eu>"
   :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
   :description "A library to parse and create SF3 files."
-  :homepage "https://shirakumo.github.io/sf3/"
-  :bug-tracker "https://github.com/shirakumo/sf3/issues"
-  :source-control (:git "https://github.com/shirakumo/sf3.git")
+  :homepage "https://shirakumo.github.io/cl-sf3/"
+  :bug-tracker "https://github.com/shirakumo/cl-sf3/issues"
+  :source-control (:git "https://github.com/shirakumo/cl-sf3.git")
   :serial T
   :components ((:file "package")
                (:file "toolkit")
