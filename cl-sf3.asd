@@ -25,4 +25,16 @@
                :pathname-utils
                :filesystem-utils
                :documentation-utils)
-  :in-order-to ((asdf:test-op (asdf:test-op :sf3-test))))
+  :in-order-to ((asdf:test-op (asdf:test-op :cl-sf3/test))))
+
+(asdf:defsystem cl-sf3/test
+  :version "1.0.0"
+  :license "zlib"
+  :author "Yukari Hafner <shinmera@tymoon.eu>"
+  :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
+  :description "Tests for cl-sf3"
+  :serial T
+  :components ((:file "test"))
+  :depends-on (:cl-sf3
+               :parachute)
+  :perform (asdf:test-op (op c) (uiop:symbol-call :parachute :test :org.shirakumo.sf3.test)))
