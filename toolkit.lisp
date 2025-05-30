@@ -48,6 +48,14 @@
       (handler-case (loop (setf crc (crc32-rotate crc (read-byte stream))))
         (end-of-file () (logxor crc #xFFFFFFFF))))))
 
+(declaim (inline universal-to-unix-time))
+(defun universal-to-unix-time (universal-time)
+  (- universal-time (encode-universal-time 0 0 0 1 1 1970 0)))
+
+(declaim (inline unix-to-universal-time))
+(defun unix-to-universal-time (unix-time)
+  (+ unix-time (encode-universal-time 0 0 0 1 1 1970 0)))
+
 (defun format-time (&optional (timestamp (get-universal-time)))
   (multiple-value-bind (s m h dd mm yy) (decode-universal-time (+ timestamp (encode-universal-time 0 0 0 1 1 1970 0)))
     (format NIL "~4,'0d-~2,'0d-~2,'0d ~2,'0d:~2,'0d:~2,'0d" yy mm dd h m s)))

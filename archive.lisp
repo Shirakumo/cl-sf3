@@ -21,9 +21,9 @@
 (define-accessors archive-meta-entry modification-time checksum mime-type path)
 (define-accessors archive meta-entries files)
 
-(defun %add-file (file path mime archive)
-  (let ((entry (make-archive-meta-entry :modification-time (file-write-date file)
-                                        :checksum (crc32 file)
+(defun %add-file (contents path mime modification-time archive)
+  (let ((entry (make-archive-meta-entry :modification-time modification-time
+                                        :checksum (crc32 contents)
                                         :mime-type (or mime "application/octet-stream")
                                         :path path)))
     (vector-push-extend (archive-meta-size archive) (archive-meta-offsets archive))
@@ -34,9 +34,15 @@
                                (length (aref (archive-files archive) (1- (archive-count archive)))))
                             0)
                         (archive-file-offsets archive))
-    (vector-push-extend (alexandria:read-file-into-byte-vector file)
-                        (archive-files archive))
+    (vector-push-extend contents (archive-files archive))
     (incf (archive-count archive))))
+
+(defmethod add-file ((file vector) (archive archive) &key (mime-type "application/octet-stream") path (modification-time (get-universal-time)))
+  (%add-file file
+             (or path (error "PATH required"))
+             (or mime-type (error "MIME-TYPE required"))
+             modification-time
+             archive))
 
 (defmethod add-file ((file pathname) (archive archive) &key mime-type path)
   (labels ((add (file path mime)
@@ -47,7 +53,9 @@
                     (dolist (sub (org.shirakumo.filesystem-utils:list-contents file))
                       (add sub (merge-pathnames (enough-namestring sub file) (or path #p"")) "application/octet-stream")))
                    (T
-                    (%add-file file (or path (file-namestring file)) mime-type archive)))))
+                    (%add-file (alexandria:read-file-into-byte-vector file)
+                               (or path (file-namestring file)) mime-type
+                               (universal-to-unix-time (file-write-date file)) archive)))))
     (add file path mime-type)))
 
 (defmethod extract-file ((file integer) (archive archive) &key path (if-exists :error) (verify T))
