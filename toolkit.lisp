@@ -65,3 +65,13 @@
      (print-unreadable-object (object stream :type T)
        (format stream ,format ,@(loop for arg in format-args
                                       collect (if (symbolp arg) `(slot-value object ',arg) arg))))))
+
+(defun lisp-type->bs-type (lisp-type)
+  (dolist (type (bs:list-io-types) (error "Don't know how to translate ~s to a binary-structures type."
+                                          lisp-type))
+    (when (and (equal (bs:lisp-type type) lisp-type)
+               (if (typep (bs:io-type type) 'bs:numeric-type)
+                   (eql :little-endian (bs:order (bs:io-type type)))
+                   T))
+      (return type))))
+

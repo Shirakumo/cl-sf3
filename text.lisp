@@ -40,12 +40,45 @@
       (#x09 link-option)
       (#x0A target-option)))
 
-(bs:define-io-structure text
+(bs:define-io-structure markup
+  (start uint64)
+  (end uint64)
+  (option markup-option))
+
+(bs:define-io-structure (text (:constructor %make-text))
   (markup-size uint64)
-  (markup-options (vector markup-option uint32))
+  (markup-options (vector markup uint32))
   (text (string uint64) :offset (+ 8 (bs:slot markup-size))))
 
 (define-print-method text "~a" text)
+
+(defun make-text (text &rest markup)
+  (let ((options (map 'vector
+                      (lambda (x)
+                        (destructuring-bind (start end option &rest args) x
+                          (assert (<= start end))
+                          (make-markup :start start :end end
+                                       :option (ecase option
+                                                 ((:bold :italic :underline :strike :mono) option)
+                                                 (:color
+                                                  (destructuring-bind (r g b) args
+                                                    (make-color-option :r r :g g :b b)))
+                                                 (:size
+                                                  (destructuring-bind (size) args
+                                                    (make-size-option :size (float size 0f0))))
+                                                 (:heading
+                                                  (destructuring-bind (level) args
+                                                    (make-heading-option :level level)))
+                                                 (:link
+                                                  (destructuring-bind (address) args
+                                                    (make-link-option :address address)))
+                                                 (:target
+                                                  (destructuring-bind (address) args
+                                                    (make-target-option :address address)))))))
+                      markup)))
+    (%make-text :markup-options options
+                :markup-size (reduce #'+ options :key #'bs:octet-size)
+                :text text)))
 
 (define-accessors color-option r g b)
 (define-accessors size-option size)

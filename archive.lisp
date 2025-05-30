@@ -8,7 +8,7 @@
 
 (define-print-method archive-meta-entry "~a ~a" mime-type path)
 
-(bs:define-io-structure archive
+(bs:define-io-structure (archive (:constructor %make-archive))
   (count uint64)
   (meta-size uint64)
   (meta-offsets (vector uint64 (bs:slot count)))
@@ -20,6 +20,14 @@
 
 (define-accessors archive-meta-entry modification-time checksum mime-type path)
 (define-accessors archive meta-entries files)
+
+(defun make-archive (files)
+  (let ((archive (%make-archive)))
+    (loop for file in files
+          do (if (listp file)
+                 (apply #'add-file (car file) archive (cdr file))
+                 (add-file file archive)))
+    archive))
 
 (defun %add-file (contents path mime modification-time archive)
   (let ((entry (make-archive-meta-entry :modification-time modification-time
