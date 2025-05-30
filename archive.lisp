@@ -1,7 +1,7 @@
 (in-package #:org.shirakumo.sf3)
 
 (bs:define-io-structure archive-meta-entry
-  (modification-time int64)
+  (modification-time sint64)
   (checksum uint32)
   (mime-type (string uint8))
   (path (string uint16)))
