@@ -7,7 +7,7 @@
 
 (define-print-method column-spec "~s ~d ~a" name length type)
 
-(define-accessors column-spec name length kind)
+(define-accessors column-spec name (size length) kind)
 
 (defun column-spec-type (spec)
   (ecase (column-spec-kind spec)
