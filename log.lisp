@@ -21,6 +21,7 @@
 
 (bs:define-io-structure log
   (start-time sint64)
+  (end-time sint64)
   (chunk-count uint16)
   (chunks (vector log-chunk (bs:slot chunk-count))))
 
@@ -28,4 +29,4 @@
 
 (define-accessors log-entry size time severity source category message)
 (define-accessors log-chunk size entries)
-(define-accessors log start-time chunks)
+(define-accessors log start-time end-time chunks)

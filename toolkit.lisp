@@ -42,11 +42,17 @@
 
 (defun crc32 (file)
   (declare (optimize speed (safety 1)))
-  (with-open-file (stream file :element-type '(unsigned-byte 8))
-    (let ((crc #xffffffff))
-      (declare (type (unsigned-byte 32) crc))
-      (handler-case (loop (setf crc (crc32-rotate crc (read-byte stream))))
-        (end-of-file () (logxor crc #xFFFFFFFF))))))
+  (let ((crc #xffffffff))
+    (declare (type (unsigned-byte 32) crc))
+    (etypecase file
+      ((or pathname string)
+       (with-open-file (stream file :element-type '(unsigned-byte 8))
+         (handler-case (loop (setf crc (crc32-rotate crc (read-byte stream))))
+           (end-of-file ()))))
+      ((vector (unsigned-byte 8))
+       (loop for byte across file
+             do (setf crc (crc32-rotate crc byte)))))
+    (logxor crc #xFFFFFFFF)))
 
 (declaim (inline universal-to-unix-time))
 (defun universal-to-unix-time (universal-time)
