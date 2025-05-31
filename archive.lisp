@@ -43,7 +43,7 @@
     (incf (archive-meta-size archive) (+ (bs:octet-size entry) 8))
     (vector-push-extend (if (< 0 (archive-count archive))
                             (+ (aref (archive-file-offsets archive) (1- (archive-count archive)))
-                               (length (aref (archive-files archive) (1- (archive-count archive)))))
+                               8 (length (aref (archive-files archive) (1- (archive-count archive)))))
                             0)
                         (archive-file-offsets archive))
     (vector-push-extend contents (archive-files archive))
