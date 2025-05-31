@@ -2,7 +2,6 @@
 
 (bs:define-io-structure sf3-file-header
   #(#x81 #x53 #x46 #x33 #x00 #xE0 #xD0 #x0D #x0A #x0A)
-  (checksum 'uint32)
   (type (case uint8
           (1 'archive)
           (2 'audio)
@@ -13,6 +12,7 @@
           (7 'table)
           (8 'text)
           (9 'vector-graphic)))
+  (checksum uint32)
   #(#x00))
 
 (bs:define-io-structure sf3-file
@@ -60,9 +60,12 @@
   (sf3-file-content (apply #'read-sf3-file storage args)))
 
 (defun write-sf3 (object storage &rest args)
-  (let ((sf3-file (make-sf3-file :content object)))
+  (let ((sf3-file (make-sf3-file
+                   :checksum 0
+                   :type (type-of object)
+                   :content object)))
     (declare (dynamic-extent sf3-file))
-    (apply #'write-sf3-file storage args)))
+    (apply #'write-sf3-file sf3-file storage args)))
 
 (defun tell-sf3 (storage &rest args)
   (let ((values (multiple-value-list (apply #'read-sf3-file-header storage args))))
