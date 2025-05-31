@@ -22,7 +22,11 @@
 (define-accessors archive meta-entries files)
 
 (defun make-archive (files)
-  (let ((archive (%make-archive)))
+  (let ((archive (%make-archive
+                  :meta-offsets (make-array 0 :adjustable T :fill-pointer T :element-type '(unsigned-byte 64))
+                  :meta-entries (make-array 0 :adjustable T :fill-pointer T)
+                  :file-offsets (make-array 0 :adjustable T :fill-pointer T :element-type '(unsigned-byte 64))
+                  :files (make-array 0 :adjustable T :fill-pointer T))))
     (loop for file in files
           do (if (listp file)
                  (apply #'add-file (car file) archive (cdr file))
@@ -30,7 +34,7 @@
     archive))
 
 (defun %add-file (contents path mime modification-time archive)
-  (let ((entry (make-archive-meta-entry :modification-time modification-time
+  (let ((entry (make-archive-meta-entry :modification-time (universal-to-unix-time modification-time)
                                         :checksum (crc32 contents)
                                         :mime-type (or mime "application/octet-stream")
                                         :path path)))
@@ -43,7 +47,8 @@
                             0)
                         (archive-file-offsets archive))
     (vector-push-extend contents (archive-files archive))
-    (incf (archive-count archive))))
+    (incf (archive-count archive))
+    archive))
 
 (defmethod add-file ((file vector) (archive archive) &key (mime-type "application/octet-stream") path (modification-time (get-universal-time)))
   (%add-file file
@@ -52,18 +57,25 @@
              modification-time
              archive))
 
-(defmethod add-file ((file pathname) (archive archive) &key mime-type path)
+(defmethod add-file ((file string) (archive archive) &key (mime-type "text/plain") path (modification-time (get-universal-time)))
+  (%add-file (babel:string-to-octets file :encoding :utf-8)
+             (or path (error "PATH required"))
+             (or mime-type (error "MIME-TYPE required"))
+             modification-time
+             archive))
+
+(defmethod add-file ((file pathname) (archive archive) &key mime-type path modification-time)
   (labels ((add (file path mime)
              (cond ((wild-pathname-p file)
                     (dolist (sub (directory file))
-                      (add sub (merge-pathnames (enough-namestring sub file) (or path #p"")) "application/octet-stream")))
+                      (add sub (merge-pathnames (enough-namestring sub file) (or path #p"")) mime)))
                    ((pathname-utils:directory-p file)
                     (dolist (sub (org.shirakumo.filesystem-utils:list-contents file))
-                      (add sub (merge-pathnames (enough-namestring sub file) (or path #p"")) "application/octet-stream")))
+                      (add sub (merge-pathnames (enough-namestring sub file) (or path #p"")) mime)))
                    (T
                     (%add-file (alexandria:read-file-into-byte-vector file)
-                               (or path (file-namestring file)) mime-type
-                               (universal-to-unix-time (file-write-date file)) archive)))))
+                               (or path (file-namestring file)) mime
+                               (or modification-time (file-write-date file)) archive)))))
     (add file path mime-type)))
 
 (defmethod extract-file ((file integer) (archive archive) &key path (if-exists :error) (verify T))
