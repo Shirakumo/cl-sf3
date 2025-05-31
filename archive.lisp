@@ -40,7 +40,7 @@
                                         :path path)))
     (vector-push-extend (archive-meta-size archive) (archive-meta-offsets archive))
     (vector-push-extend entry (archive-meta-entries archive))
-    (incf (archive-meta-size archive) (bs:octet-size entry))
+    (incf (archive-meta-size archive) (+ (bs:octet-size entry) 8))
     (vector-push-extend (if (< 0 (archive-count archive))
                             (+ (aref (archive-file-offsets archive) (1- (archive-count archive)))
                                (length (aref (archive-files archive) (1- (archive-count archive)))))
