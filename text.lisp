@@ -48,7 +48,7 @@
 (bs:define-io-structure (text (:constructor %make-text))
   (markup-size uint64)
   (markup-options (vector markup uint32))
-  (text (string uint64) :offset (+ 8 (bs:slot markup-size))))
+  (text (string uint64) :offset (the bs:index (+ 12 (bs:slot markup-size)))))
 
 (define-print-method text "~a" text)
 
@@ -62,7 +62,9 @@
                                                  ((:bold :italic :underline :strike :mono) option)
                                                  (:color
                                                   (destructuring-bind (r g b) args
-                                                    (make-color-option :r r :g g :b b)))
+                                                    (make-color-option :r (float r 0f0)
+                                                                       :g (float g 0f0)
+                                                                       :b (float b 0f0))))
                                                  (:size
                                                   (destructuring-bind (size) args
                                                     (make-size-option :size (float size 0f0))))
