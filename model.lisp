@@ -1,12 +1,47 @@
 (in-package #:org.shirakumo.sf3)
 
-(bs:define-io-structure model
+(bs:define-io-structure (model (:constructor %make-model))
   (format uint8)
   (material-type uint8)
   (material-size uint32)
   (textures (vector (string uint16) (ldb (byte 4 0) (bs:slot material-type))))
   (faces (vector uint32 uint32) :offset (+ (bs:slot material-size) 6))
   (vertices (vector float32 uint32)))
+
+(defun make-model (faces vertices &key (vertex-attributes '(:position)) material)
+  (let ((textures (coerce (loop for k in '(:albedo :normal :metalness :roughness :occlusion :emission)
+                                for v = (getf material k)
+                                when v collect v)
+                          'vector))
+        (material-types (loop for (k) on material by #'cddr collect k)))
+    (%make-model :format (cond ((equal vertex-attributes '(:position)) #x01)
+                               ((equal vertex-attributes '(:position :uv)) #x03)
+                               ((equal vertex-attributes '(:position :color)) #x05)
+                               ((equal vertex-attributes '(:position :normal)) #x09)
+                               ((equal vertex-attributes '(:position :uv :normal)) #x0B)
+                               ((equal vertex-attributes '(:position :color :normal)) #x0D)
+                               ((equal vertex-attributes '(:position :uv :normal :tangent)) #x1B)
+                               ((equal vertex-attributes '(:position :color :normal :tangent)) #x1D)
+                               (T (error "Invalid vertex attribute set:~%  ~s" vertex-attributes)))
+                 :material-type (cond ((set-equal material-types '()) #x00)
+                                      ((set-equal material-types '(:albedo)) #x01)
+                                      ((set-equal material-types '(:albedo :normal)) #x03)
+                                      ((set-equal material-types '(:albedo :emission)) #x81)
+                                      ((set-equal material-types '(:albedo :normal :specular)) #x43)
+                                      ((set-equal material-types '(:albedo :normal :emission)) #x83)
+                                      ((set-equal material-types '(:albedo :normal :metallic)) #x07)
+                                      ((set-equal material-types '(:albedo :normal :metalness :roughness)) #x1B)
+                                      ((set-equal material-types '(:albedo :normal :specular :emission)) #xC3)
+                                      ((set-equal material-types '(:albedo :normal :metallic :emission)) #x87)
+                                      ((set-equal material-types '(:albedo :normal :metalness :roughness :emission)) #x9B)
+                                      ((set-equal material-types '(:albedo :normal :metalness :roughness :occlusion)) #x3B)
+                                      ((set-equal material-types '(:albedo :normal :metalness :roughness :occlusion :emission)) #xBB)
+                                      (T (error "Invalid material set:~%  ~s" material-types)))
+                 :material-size (loop for texture across textures
+                                      sum (+ 3 (babel:string-size-in-octets texture :encoding :utf-8)))
+                 :textures textures
+                 :faces (coerce faces '(simple-array (unsigned-byte 32) (*)))
+                 :vertices (coerce vertices '(simple-array single-float (*))))))
 
 (defun vertex-attributes (model)
   (ecase (model-format model)
@@ -18,6 +53,15 @@
     (#x0D '(:position :color :normal))
     (#x1B '(:position :uv :normal :tangent))
     (#x1D '(:position :color :normal :tangent))))
+
+(defun vertex-stride (model)
+  (let ((f (model-format model)))
+    (+ (if (logbitp 0 f) 3 0) ; position
+       (if (logbitp 1 f) 2 0) ; uv
+       (if (logbitp 2 f) 3 0) ; color
+       (if (logbitp 3 f) 3 0) ; normal
+       (if (logbitp 4 f) 3 0) ; tangent
+       )))
 
 (defun texture-types (model)
   (ecase (model-material-type model)

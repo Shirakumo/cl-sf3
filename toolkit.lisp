@@ -81,3 +81,5 @@
                    T))
       (return type))))
 
+(defun set-equal (a b)
+  (null (set-exclusive-or a b)))

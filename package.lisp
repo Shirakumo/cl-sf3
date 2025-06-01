@@ -62,6 +62,7 @@
    #:model
    #:make-model
    #:vertex-attributes
+   #:vertex-stride
    #:texture-types
    #:textures
    #:faces
