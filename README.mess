@@ -1,1 +1,13 @@
-# AAAA
+# About cl-sf3
+This is an implementation of the ''SF3 (Simple File Format Family)''(link https://shirakumo.org/docs/sf3) standard. It provides easy parsing and creation of SF3 formatted files. Included are formats for images, audio, 3D models, rich text, logging, archives, and more.
+
+## How To
+In order to parse an SF3 file of any type, simply use ``read-sf3``. It will return an ``archive``, ``audio``, ``image``, ``log``, ``model``, ``physics-model``, ``table``, ``text``, or ``vector-graphic`` instance. In order to determine what type of file it is before parsing it fully, you can use ``tell-sf3``. And in order to serialise an instance to file, you can similarly use ``write-sf3``.
+
+As per usual for systems like this that are implemented via ''binary-structures''(link https://shinmera.com/docs/binary-structures) you can use pathnames, binary streams, octet-vectors, and foreign memory pointers as the ``storage`` object.
+
+In order to construct the instances, each instance type has its own function prefixed with ``make-``: ``make-archive``, ``make-audio``, ``make-image``, ``make-log``, ``make-model``, ``make-physics-model``, ``make-table``, ``make-text``, ``make-vector-graphic``.
+
+Finally, you can also get the specified file extension for a type via ``file-extension``, and its mime-type via ``mime-type``.
+
+If you only have use of specific file formats, you can load support for only those formats by loading ``cl-sf3/audio``, etc.

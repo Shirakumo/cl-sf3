@@ -103,7 +103,7 @@
   (:export
    #:column-spec
    #:make-column-spec
-   #:column-spec-type
+   #:kind
    #:column-spec-element-size
    #:column-spec-element-count
    #:table
