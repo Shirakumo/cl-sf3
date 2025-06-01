@@ -85,7 +85,7 @@
     (alexandria:write-byte-vector-into-file (aref (archive-files archive) file) path :if-exists if-exists)
     (when verify (assert (= (archive-meta-entry-checksum meta) (crc32 path))))))
 
-(defmethod extract-file ((all (eql T)) (archive archive) &key path (if-exists :error) (verify T))
+(defmethod extract-file ((all (eql T)) (archive archive) &key path (if-exists :error) (verify T) (preserve-modification-time T))
   (loop with metas = (archive-meta-entries archive)
         with files = (archive-files archive)
         for i from 0 below (archive-count archive)
@@ -94,4 +94,8 @@
         for file-path = (merge-pathnames (archive-meta-entry-path meta) path)
         do (ensure-directories-exist file-path)
            (alexandria:write-byte-vector-into-file bytes file-path :if-exists if-exists)
-           (when verify (assert (= (archive-meta-entry-checksum meta) (crc32 file-path))))))
+           (when preserve-modification-time
+             (setf (org.shirakumo.file-attributes:modification-time file-path)
+                   (unix-to-universal-time (archive-meta-entry-modification-time meta))))
+           (when verify
+             (assert (= (archive-meta-entry-checksum meta) (crc32 file-path))))))

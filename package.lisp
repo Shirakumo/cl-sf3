@@ -5,7 +5,9 @@
    (#:bs #:org.shirakumo.binary-structures)
    (#:bst #:org.shirakumo.binary-structures.types))
   ;; toolkit.lisp
-  (:export)
+  (:export
+   #:unix-to-universal-time
+   #:universal-time-to-unix)
   ;; archive.lisp
   (:export
    #:archive-meta-entry
@@ -56,7 +58,10 @@
    #:entries
    #:start-time
    #:end-time
-   #:chunks)
+   #:chunks
+   #:log
+   #:log-append-chunk
+   #:log-append-entry-extend)
   ;; model.lisp
   (:export
    #:model
