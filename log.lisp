@@ -12,10 +12,10 @@
                                     (severity 0)
                                     (source "")
                                     (category ""))
-  (%make-log-entry :size (+ 4 8 1 1 1 2
-                            (babel:string-size-in-octets source :encoding :utf-8)
-                            (babel:string-size-in-octets category :encoding :utf-8)
-                            (babel:string-size-in-octets message :encoding :utf-8))
+  (%make-log-entry :size (+ 4 8 1
+                            1 1 (babel:string-size-in-octets source :encoding :utf-8)
+                            1 1 (babel:string-size-in-octets category :encoding :utf-8)
+                            2 1 (babel:string-size-in-octets message :encoding :utf-8))
                    :message message
                    :time (universal-to-unix-time time)
                    :severity severity
@@ -60,6 +60,7 @@
     (setf (aref (log-chunk-entries chunk) index) entry)
     (setf (fill-pointer (log-chunk-entries chunk)) (1+ index))
     (incf (log-chunk-entry-count chunk))
+    (incf (log-chunk-size chunk) (log-entry-size entry))
     chunk))
 
 (define-print-method log-chunk "~d" entry-count)
