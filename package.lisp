@@ -189,8 +189,6 @@
   (:export
    #:sf3-file-header
    #:make-sf3-file-header
-   #:sf3-file
-   #:make-sf3-file
    #:file-extension
    #:mime-type
    #:read-sf3
