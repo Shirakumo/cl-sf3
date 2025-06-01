@@ -2,7 +2,7 @@
 
 (bs:define-io-structure sf3-file-header
   #(#x81 #x53 #x46 #x33 #x00 #xE0 #xD0 #x0D #x0A #x0A)
-  (type (case uint8
+  (kind (case uint8
           (1 'archive)
           (2 'audio)
           (3 'image)
@@ -15,7 +15,9 @@
   (checksum uint32)
   #(#x00))
 
-(define-print-method sf3-file-header "~a ~4,'0x" type checksum)
+(define-print-method sf3-file-header "~a ~4,'0x" kind checksum)
+
+(define-accessors sf3-file-header kind checksum)
 
 (defgeneric file-extension (object)
   (:method ((_ bs::io-structure-object)) (file-extension (type-of object)))
@@ -58,7 +60,7 @@
           (cffi:foreign-pointer
            (setf storage state)
            (decf (car args) (bs:octet-size header))))
-        (ecase (sf3-file-header-type header)
+        (ecase (sf3-file-header-kind header)
           (archive (apply #'read-archive storage args))
           (audio (apply #'read-audio storage args))
           (image (apply #'read-image storage args))
@@ -87,7 +89,7 @@
             (cffi:foreign-pointer
              (setf storage state)
              (decf (car args) (bs:octet-size header))))
-          (ecase (sf3-file-header-type struct)
+          (ecase (sf3-file-header-kind struct)
             (archive (apply #'write-archive object storage args))
             (audio (apply #'write-audio object storage args))
             (image (apply #'write-image object storage args))

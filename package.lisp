@@ -194,6 +194,8 @@
   (:export
    #:sf3-file-header
    #:make-sf3-file-header
+   #:kind
+   #:checksum
    #:file-extension
    #:mime-type
    #:read-sf3
