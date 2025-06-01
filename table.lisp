@@ -1,9 +1,16 @@
 (in-package #:org.shirakumo.sf3)
 
-(bs:define-io-structure column-spec
+(bs:define-io-structure (column-spec (:constructor %make-column-spec))
   (name (string uint16))
   (length uint32)
   (kind uint8))
+
+(defun make-column-spec (name &optional (kind :string) length)
+  (%make-column-spec :name name
+                     :length (if (eql :string kind)
+                                 (or length 64)
+                                 (* (or length 1) (bs:octet-size kind)))
+                     :kind (type->column-spec-kind kind)))
 
 (define-print-method column-spec "~s ~d ~a" name length type)
 
@@ -11,21 +18,39 @@
 
 (defun column-spec-type (spec)
   (ecase (column-spec-kind spec)
-    (#x01 'bs:uint8)
-    (#x02 'bs:uint16)
-    (#x04 'bs:uint32)
-    (#x08 'bs:uint64)
-    (#x11 'bs:sint8)
-    (#x12 'bs:sint16)
-    (#x14 'bs:sint32)
-    (#x18 'bs:sint64)
-    (#x22 'bs:float16)
-    (#x24 'bs:float32)
-    (#x28 'bs:float64)
-    (#x31 'bs:utf8-string)
-    (#x48 'timestamp)
-    (#x58 'high-resolution-timestamp)
-    (#x61 'boolean)))
+    (#x01 :uint8)
+    (#x02 :uint16)
+    (#x04 :uint32)
+    (#x08 :uint64)
+    (#x11 :sint8)
+    (#x12 :sint16)
+    (#x14 :sint32)
+    (#x18 :sint64)
+    (#x22 :float16)
+    (#x24 :float32)
+    (#x28 :float64)
+    (#x31 :string)
+    (#x48 :timestamp)
+    (#x58 :high-resolution-timestamp)
+    (#x61 :boolean)))
+
+(defun type->column-spec-kind (type)
+  (case type
+    (:uint8 #x01)
+    (:uint16 #x02)
+    (:uint32 #x04)
+    (:uint64 #x08)
+    (:sint8 #x11)
+    (:sint16 #x12)
+    (:sint32 #x14)
+    (:sint64 #x18)
+    (:float16 #x22)
+    (:float32 #x24)
+    (:float64 #x28)
+    (:string #x31)
+    (:timestamp #x48)
+    (:high-resolution-timestamp #x58)
+    (:boolean #x61)))
 
 (defun column-spec-reader (spec)
   (ecase (column-spec-kind spec)
@@ -69,13 +94,33 @@
 (defun column-spec-element-count (spec)
   (/ (column-spec-length spec) (column-spec-element-size spec)))
 
-(bs:define-io-structure table
-  (spec-length uint32)
+(bs:define-io-structure (table (:constructor %make-table))
   (column-count uint16)
   (row-length uint64)
   (row-count uint64)
+  (spec-length uint32)
   (column-specs (vector column-spec (bs:slot column-count)))
   (row-data (vector uint8 (* (bs:slot row-length) (bs:slot row-count)))))
+
+(defun make-table (columns data)
+  (let* ((columns (coerce (loop for spec in columns
+                                collect (if (listp spec)
+                                            (apply #'make-column-spec spec)
+                                            (make-column-spec spec)))
+                          'vector))
+         (column-count (length columns))
+         (row-count (length data))
+         (row-length (reduce #'+ columns :key #'column-spec-length))
+         (table (%make-table :column-count column-count
+                             :row-length row-length
+                             :row-count row-count
+                             :spec-length (reduce #'+ columns :key #'bs:octet-size)
+                             :column-specs columns
+                             :row-data (make-array (* row-count row-length) :element-type '(unsigned-byte 8)))))
+    (dotimes (r row-count table)
+      (let ((row (elt data r)))
+        (dotimes (c column-count)
+          (setf (cell table r c) (elt row c)))))))
 
 (define-print-method table "~dx~d" column-count row-count)
 
@@ -102,7 +147,7 @@
                         (setf i next))
                     v))))
 
-(defun cell (value table row column)
+(defun (setf cell) (value table row column)
   (let* ((data (table-row-data table))
          (specs (table-column-specs table))
          (spec (aref specs column))
@@ -114,6 +159,6 @@
          (i cell-start))
     (if (listp value)
         (loop while (and (< i cell-end) value)
-              collect (setf i (funcall writer value data i cell-end)))
+              collect (setf i (funcall writer (pop value) data i cell-end)))
         (funcall writer value data cell-start cell-end))
     value))
