@@ -108,8 +108,8 @@
 (bs:define-io-structure (text-shape (:constructor %make-text-shape))
   (point point)
   (color color)
-  (font (string uint16))
   (font-size float32)
+  (font (string uint16))
   (text (string uint16)))
 
 (defun make-text-shape (x y text &key (color (make-color 0 0 0)) (font "sans-serif") (font-size 12))
