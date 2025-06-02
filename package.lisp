@@ -37,11 +37,12 @@
    #:image
    #:make-image
    #:pixel-type
+   #:pixel-format
    #:width
    #:height
    #:depth
    #:channels
-   #:data)
+   #:pixels)
   ;; log.lisp
   (:export
    #:log-entry

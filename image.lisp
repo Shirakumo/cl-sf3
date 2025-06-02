@@ -19,19 +19,19 @@
   (height uint32)
   (depth uint32)
   (channels uint8)
-  (format pixel-format)
-  (data (case (bs:slot format)
-          (:sint8 (vector :sint8 (image-pixels bs:instance)))
-          (:sint16 (vector :sint16 (image-pixels bs:instance)))
-          (:sint32 (vector :sint32 (image-pixels bs:instance)))
-          (:sint64 (vector :sint64 (image-pixels bs:instance)))
-          (:uint8 (vector :uint8 (image-pixels bs:instance)))
-          (:uint16 (vector :uint16 (image-pixels bs:instance)))
-          (:uint32 (vector :uint32 (image-pixels bs:instance)))
-          (:uint64 (vector :uint64 (image-pixels bs:instance)))
-          (:uint16 (vector :uint16 (image-pixels bs:instance)))
-          (:float32 (vector :float32 (image-pixels bs:instance)))
-          (:float64 (vector :float64 (image-pixels bs:instance))))))
+  (pixel-format pixel-format)
+  (pixels (case (bs:slot pixel-format)
+            (:sint8 (vector :sint8 (image-pixels bs:instance)))
+            (:sint16 (vector :sint16 (image-pixels bs:instance)))
+            (:sint32 (vector :sint32 (image-pixels bs:instance)))
+            (:sint64 (vector :sint64 (image-pixels bs:instance)))
+            (:uint8 (vector :uint8 (image-pixels bs:instance)))
+            (:uint16 (vector :uint16 (image-pixels bs:instance)))
+            (:uint32 (vector :uint32 (image-pixels bs:instance)))
+            (:uint64 (vector :uint64 (image-pixels bs:instance)))
+            (:uint16 (vector :uint16 (image-pixels bs:instance)))
+            (:float32 (vector :float32 (image-pixels bs:instance)))
+            (:float64 (vector :float64 (image-pixels bs:instance))))))
 
 (defun image-pixels (image)
   (* (image-width image)
@@ -39,11 +39,11 @@
      (image-depth image)
      (ldb (byte 4 0) (image-channels image))))
 
-(defun make-image (pixels width height &key (depth 1) (channel-format :v))
+(defun make-image (pixels width height &key (depth 1) (pixel-type :v))
   (%make-image :width width
                :height height
                :depth depth
-               :channels (ecase channel-format
+               :channels (ecase pixel-type
                            (:V #x01)
                            (:VA #x02)
                            (:RGB #x03)
@@ -56,7 +56,7 @@
                            (:CMYK #x44)
                            (:KYMC #x54))
                :format (lisp-type->bs-type (array-element-type pixels))
-               :data pixels))
+               :pixels pixels))
 
 (defun pixel-type (image)
   (ecase (image-channels image)
@@ -75,7 +75,4 @@
 (define-print-method image "~d~[~;~:;~:*x~d~]~[~;~:;~:*x~d~] ~a ~a" 
   width height depth format (pixel-type object))
 
-(define-accessors image width height depth channels data)
-
-
-(BS:DEFINE-IO-BACKEND-FUNCTION :WRITE BS:IO-STREAM IMAGE)
+(define-accessors image width height depth channels pixel-format data)
