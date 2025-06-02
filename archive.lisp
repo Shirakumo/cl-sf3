@@ -81,24 +81,32 @@
                                (or modification-time (file-write-date file)) archive)))))
     (add file path mime-type)))
 
-(defmethod extract-file ((file integer) (archive archive) &key path (if-exists :error) (verify T))
+(defmethod extract-file ((file integer) (archive archive) &key path (if-exists :error) (verify T) (preserve-modification-time T))
   (let* ((meta (aref (archive-meta-entries archive) file))
          (path (or path (archive-meta-entry-path meta))))
     (ensure-directories-exist path)
     (alexandria:write-byte-vector-into-file (aref (archive-files archive) file) path :if-exists if-exists)
-    (when verify (assert (= (archive-meta-entry-checksum meta) (crc32 path))))))
+    (when preserve-modification-time
+      (setf (org.shirakumo.file-attributes:modification-time path)
+            (unix-to-universal-time (archive-meta-entry-modification-time meta))))
+    (when verify
+      (assert (= (archive-meta-entry-checksum meta) (crc32 path))))
+    path))
+
+(defmethod extract-file ((file string) (archive archive) &rest args &key &allow-other-keys)
+  (loop with metas = (archive-meta-entries archive)
+        for i from 0 below (archive-count archive)
+        for file-path = (archive-meta-entry-path (aref metas i))
+        do (when (string= file file-path)
+             (return (apply #'extract-file i archive args)))
+        finally (error "No file with path~%  ~a~%in archive ~a" file archive)))
 
 (defmethod extract-file ((all (eql T)) (archive archive) &key path (if-exists :error) (verify T) (preserve-modification-time T))
   (loop with metas = (archive-meta-entries archive)
-        with files = (archive-files archive)
         for i from 0 below (archive-count archive)
-        for meta = (aref metas i)
-        for bytes = (aref files i)
-        for file-path = (merge-pathnames (archive-meta-entry-path meta) path)
-        do (ensure-directories-exist file-path)
-           (alexandria:write-byte-vector-into-file bytes file-path :if-exists if-exists)
-           (when preserve-modification-time
-             (setf (org.shirakumo.file-attributes:modification-time file-path)
-                   (unix-to-universal-time (archive-meta-entry-modification-time meta))))
-           (when verify
-             (assert (= (archive-meta-entry-checksum meta) (crc32 file-path))))))
+        for file-path = (merge-pathnames (archive-meta-entry-path (aref metas i)) path)
+        do (extract-file i archive :preserve-modification-time preserve-modification-time
+                                   :verify verify
+                                   :if-exists if-exists
+                                   :path file-path))
+  path)
