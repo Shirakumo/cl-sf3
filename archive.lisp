@@ -74,7 +74,10 @@
                       (add sub (merge-pathnames (enough-namestring sub file) (or path #p"")) mime)))
                    (T
                     (%add-file (alexandria:read-file-into-byte-vector file)
-                               (or path (file-namestring file)) mime
+                               (if path
+                                   (org.shirakumo.pathname-utils:unix-namestring path)
+                                   (file-namestring file))
+                               mime
                                (or modification-time (file-write-date file)) archive)))))
     (add file path mime-type)))
 
