@@ -99,4 +99,4 @@
 (define-accessors mesh vertices)
 (define-accessors shape transform data)
 (define-accessors physics-model mass tensor shapes)
-
+(define-delegates shape data width height depth bottom-radius top-radius vertices)

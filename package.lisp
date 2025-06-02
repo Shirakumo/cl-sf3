@@ -38,6 +38,7 @@
    #:make-image
    #:pixel-type
    #:pixel-format
+   #:pixel-stride
    #:width
    #:height
    #:depth
@@ -107,6 +108,7 @@
    #:column-spec
    #:make-column-spec
    #:kind
+   #:column-spec-type
    #:column-spec-element-size
    #:column-spec-element-count
    #:table

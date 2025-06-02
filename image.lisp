@@ -72,6 +72,9 @@
     (#x44 :CMYK)
     (#x54 :KYMC)))
 
+(defun pixel-stride (image)
+  (ldb (byte 4 0) (image-channels image)))
+
 (define-print-method image "~d~[~;~:;~:*x~d~]~[~;~:;~:*x~d~] ~a ~a" 
   width height depth format (pixel-type object))
 

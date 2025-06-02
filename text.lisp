@@ -1,29 +1,46 @@
 (in-package #:org.shirakumo.sf3)
 
-(bs:define-io-structure color-option
+(bs:define-io-structure (color-option (:constructor %make-color-option))
   (r float32)
   (g float32)
   (b float32))
 
+(defun make-color-option (&optional (r 0) (g 0) (b 0))
+  (%make-color-option :r (float r 0f0)
+                      :g (float g 0f0)
+                      :b (float b 0f0)))
+
 (define-print-method color-option "~,2f ~,2f ~,2f" r g b)
 
-(bs:define-io-structure size-option
+(bs:define-io-structure (size-option (:constructor %make-size-option))
   (size float32))
+
+(defun make-size-option (size)
+  (%make-size-option :size (float size 0f0)))
 
 (define-print-method size-option "~,2f" size)
 
-(bs:define-io-structure heading-option
+(bs:define-io-structure (heading-option (:constructor %make-heading-option))
   (level uint8))
+
+(defun make-heading-option (level)
+  (%make-heading-option :level level))
 
 (define-print-method heading-option "~d" level)
 
-(bs:define-io-structure link-option
+(bs:define-io-structure (link-option (:constructor %make-link-option))
   (address (string uint16)))
+
+(defun make-link-option (address)
+  (%make-link-option :address address))
 
 (define-print-method link-option "~a" address)
 
-(bs:define-io-structure target-option
+(bs:define-io-structure (target-option (:constructor %make-target-option))
   (address (string uint16)))
+
+(defun make-target-option (address)
+  (%make-target-option :address address))
 
 (define-print-method target-option "~a" address)
 
@@ -40,10 +57,13 @@
       (#x09 link-option)
       (#x0A target-option)))
 
-(bs:define-io-structure markup
+(bs:define-io-structure (markup (:constructor %make-markup))
   (start uint64)
   (end uint64)
   (option markup-option))
+
+(defun make-markup (start end option)
+  (%make-markup :start start :end end :option option))
 
 (bs:define-io-structure (text (:constructor %make-text))
   (markup-size uint64)
@@ -55,28 +75,21 @@
 (defun make-text (text &rest markup)
   (let ((options (map 'vector
                       (lambda (x)
-                        (destructuring-bind (start end option &rest args) x
-                          (assert (<= start end))
-                          (make-markup :start start :end end
-                                       :option (ecase option
-                                                 ((:bold :italic :underline :strike :mono) option)
-                                                 (:color
-                                                  (destructuring-bind (r g b) args
-                                                    (make-color-option :r (float r 0f0)
-                                                                       :g (float g 0f0)
-                                                                       :b (float b 0f0))))
-                                                 (:size
-                                                  (destructuring-bind (size) args
-                                                    (make-size-option :size (float size 0f0))))
-                                                 (:heading
-                                                  (destructuring-bind (level) args
-                                                    (make-heading-option :level level)))
-                                                 (:link
-                                                  (destructuring-bind (address) args
-                                                    (make-link-option :address address)))
-                                                 (:target
-                                                  (destructuring-bind (address) args
-                                                    (make-target-option :address address)))))))
+                        (etypecase x
+                          (markup markup)
+                          (cons 
+                           (destructuring-bind (start end option &rest args) x
+                             (assert (<= start end))
+                             (make-markup :start start :end end
+                                          :option (etypecase option
+                                                    ((or color-option size-option heading-option link-option target-option)
+                                                     option)
+                                                    ((member :bold :italic :underline :strike :mono) option)
+                                                    ((eql :color) (apply #'make-color-option args))
+                                                    ((eql :size) (apply #'make-size-option args))
+                                                    ((eql :heading) (apply #'make-heading-option args))
+                                                    ((eql :link) (apply #'make-link-option args))
+                                                    ((eql :target) (apply #'make-target-option args))))))))
                       markup)))
     (%make-text :markup-options options
                 :markup-size (reduce #'+ options :key #'bs:octet-size)
@@ -88,3 +101,4 @@
 (define-accessors link-option address)
 (define-accessors target-option address)
 (define-accessors text markup text)
+(define-delegates markup option r g b size level address)

@@ -5,12 +5,12 @@
   (length uint32)
   (kind uint8))
 
-(defun make-column-spec (name &optional (kind :string) length)
+(defun make-column-spec (name &optional (type :string) length)
   (%make-column-spec :name name
-                     :length (if (eql :string kind)
+                     :length (if (eql :string type)
                                  (or length 64)
-                                 (* (or length 1) (bs:octet-size kind)))
-                     :kind (type->column-spec-kind kind)))
+                                 (* (or length 1) (bs:octet-size type)))
+                     :kind (type->column-spec-kind type)))
 
 (define-print-method column-spec "~s ~d ~a" name length type)
 
@@ -92,7 +92,9 @@
   (ldb (byte 4 0) (column-spec-kind spec)))
 
 (defun column-spec-element-count (spec)
-  (/ (column-spec-length spec) (column-spec-element-size spec)))
+  (if (= #x31 (column-spec-kind spec))
+      1
+      (/ (column-spec-length spec) (column-spec-element-size spec))))
 
 (bs:define-io-structure (table (:constructor %make-table))
   (column-count uint16)
@@ -104,9 +106,10 @@
 
 (defun make-table (columns data)
   (let* ((columns (coerce (loop for spec in columns
-                                collect (if (listp spec)
-                                            (apply #'make-column-spec spec)
-                                            (make-column-spec spec)))
+                                collect (etypecase spec
+                                          (list (apply #'make-column-spec spec))
+                                          (string (make-column-spec spec))
+                                          (column-spec spec)))
                           'vector))
          (column-count (length columns))
          (row-count (length data))
