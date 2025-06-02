@@ -18,6 +18,7 @@
    #:checksum
    #:mime-type
    #:path
+   #:meta-entries
    #:files
    #:add-file
    #:extract-file)
@@ -28,6 +29,7 @@
    #:duration
    #:samplerate
    #:channels
+   #:channel-format
    #:sample-format
    #:samples)
   ;; image.lisp

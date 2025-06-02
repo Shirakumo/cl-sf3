@@ -47,6 +47,18 @@
   (float (/ (audio-frame-count audio)
             (audio-samplerate audio))))
 
+(defun channel-layout (audio)
+  (ecase (audio-channels audio)
+    (1 '(:center-front))
+    (2 '(:left-front :right-front))
+    (3 '(:left-front :right-front :center-front))
+    (4 '(:left-front :right-front :left-rear :right-rear))
+    (5 '(:left-front :right-front :left-rear :right-rear :subwoofer))
+    (6 '(:left-front :right-front :center-front :left-rear :right-rear :subwoofer))
+    (7 '(:left-front :right-front :center-front :left-rear :right-rear :left-side :right-side))
+    (8 '(:left-front :right-front :center-front :left-rear :right-rear :left-side :right-side :subwoofer))
+    (9 '(:left-front :right-front :center-front :left-rear :center-rear :right-rear :left-side :right-side :subwoofer))))
+
 (define-print-method audio "~d:~2,'0d ~dx~a @~dHz"
   (floor (duration object) 60) (mod (ceiling (duration object)) 60)
   channels sample-format samplerate)
