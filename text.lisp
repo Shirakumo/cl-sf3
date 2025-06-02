@@ -5,7 +5,7 @@
   (g float32)
   (b float32))
 
-(defun make-color-option (&optional (r 0) (g 0) (b 0))
+(defun make-color-option (start end &optional (r 0) (g 0) (b 0))
   (%make-color-option :r (float r 0f0)
                       :g (float g 0f0)
                       :b (float b 0f0)))
@@ -13,12 +13,12 @@
 (define-print-method color-option "~,2f ~,2f ~,2f" r g b)
 
 (bs:define-io-structure (size-option (:constructor %make-size-option))
-  (size float32))
+  (font-size float32))
 
-(defun make-size-option (size)
-  (%make-size-option :size (float size 0f0)))
+(defun make-size-option (font-size)
+  (%make-size-option :font-size (float font-size 0f0)))
 
-(define-print-method size-option "~,2f" size)
+(define-print-method size-option "~,2f" font-size)
 
 (bs:define-io-structure (heading-option (:constructor %make-heading-option))
   (level uint8))
@@ -96,9 +96,10 @@
                 :text text)))
 
 (define-accessors color-option r g b)
-(define-accessors size-option size)
+(define-accessors size-option font-size)
 (define-accessors heading-option level)
 (define-accessors link-option address)
 (define-accessors target-option address)
+(define-accessors markup start end option)
 (define-accessors text markup text)
 (define-delegates markup option r g b size level address)

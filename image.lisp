@@ -78,4 +78,4 @@
 (define-print-method image "~d~[~;~:;~:*x~d~]~[~;~:;~:*x~d~] ~a ~a" 
   width height depth format (pixel-type object))
 
-(define-accessors image width height depth channels pixel-format data)
+(define-accessors image width height depth channels pixel-format pixels)

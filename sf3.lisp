@@ -1,6 +1,6 @@
 (in-package #:org.shirakumo.sf3)
 
-(bs:define-io-structure sf3-file-header
+(bs:define-io-structure (sf3-file-header (:constructor %make-sf3-file-header))
   #(#x81 #x53 #x46 #x33 #x00 #xE0 #xD0 #x0D #x0A #x0A)
   (kind (case uint8
           (1 'archive)
@@ -14,6 +14,9 @@
           (9 'vector-graphic)))
   (checksum uint32)
   #(#x00))
+
+(defun make-sf3-file-header (kind &optional (checksum 0))
+  (%make-sf3-file-header :kind kind :checksum checksum))
 
 (define-print-method sf3-file-header "~a ~4,'0x" kind checksum)
 
@@ -77,9 +80,7 @@
                                       :direction :output
                                       :if-exists (getf args :if-exists :error))
         (write-sf3 object stream))
-      (let ((header (make-sf3-file-header
-                     :checksum 0
-                     :type (type-of object))))
+      (let ((header (make-sf3-file-header (type-of object))))
         (declare (dynamic-extent header))
         (multiple-value-bind (struct state) (apply #'write-sf3-file-header header storage args)
           (etypecase storage
