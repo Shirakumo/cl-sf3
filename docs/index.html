@@ -1,0 +1,1065 @@
+<!DOCTYPE html> <html lang="EN"> <head> <meta charset="utf-8"> <title>Cl Sf3</title> <style>html body{margin:0 auto 0 auto;padding:20px;max-width:1024px;font-family:sans-serif;font-size:14pt;overflow-y:scroll;}html body a{text-decoration:none;}html body a[href]{color:#0055AA;}html body a[href]:hover{color:#0088EE;}html body pre{background:#FAFAFA;border:1px solid #DDDDDD;padding:0.75em;overflow-x:auto;}html body pre >code a[href]{color:#223388;}article.project h1{font-size:1.7em;}article.project h1,article.project h2,article.project h3,article.project h4,article.project h5,article.project h6{margin:0.2em 0 0.1em 0;text-indent:1em;}article.project >header{text-align:center;}article.project >header img.logo{display:block;margin:auto;max-height:170px;}article.project >header h1{display:inline-block;text-indent:0;font-size:2.5em;}article.project >header .version{vertical-align:bottom;}article.project >header .languages{margin-top:-0.5em;text-transform:capitalize;}article.project >header .description{margin:0;}article.project >header .pages{margin-top:0.5em;font-size:1.2em;text-transform:capitalize;}article.project >header .pages a{display:inline-block;padding:0 0.2em;}article.project >section{margin:1em 0 1em 0;}article.project >section img{max-width:100%;}article.project #index >ul{list-style:none;margin:0;padding:0;}article.project .row label{display:inline-block;min-width:8em;}article.project #system .row{display:flex;}article.project #system #dependencies{display:inline;margin:0;padding:0;}article.project #system #dependencies li{display:inline;padding:0 0.2em;}article.project #system #author label{vertical-align:top;}article.project #system #author ul{display:inline-block;margin:0;padding:0;list-style:none;}article.project #toc nav>*{margin-left:1em;display:block;}article.definition{margin:1em 0 0 0;}article.definition >header h1,article.definition >header h2,article.definition >header h3,article.definition >header h4,article.definition >header h5,article.definition >header h6{text-indent:0;display:inline-block;}article.definition >header ul{display:inline-block;list-style:none;margin:0;padding:0;}article.definition >header ul li{display:inline-block;padding:0 0.2em 0 0;}article.definition >header .visibility{display:none;}article.definition >header .visibility,article.definition >header .type{text-transform:lowercase;}article.definition >header .source-link{visibility:hidden;float:right;}article.definition >header .source-link:after{visibility:visible;content:"[SRC]";}article.definition .docstring{margin:0 0 0 1em;}article.definition .docstring pre{font-size:0.8em;white-space:pre-wrap;}.definition.package >header ul.nicknames{display:inline-block;list-style:none;margin:0;padding:0 0 0 1em;}.definition.package >header ul.nicknames li{display:inline;}.definition.package >header ul.nicknames:before{content:"(";}.definition.package >header ul.nicknames:after{content:")";}.definition.package ul.definitions{margin:0;list-style:none;padding:0 0 0 0.5em;}.definition.callable >header .name:before,.definition.type >header .name:before{content:"(";font-weight:normal;}.definition.callable >header .arguments:after,.definition.type >header .arguments:after{content:")";}.definition.callable >header .arguments .arguments:before,.definition.type >header .arguments .arguments:before{content:"(";}.definition.callable >header .arguments .argument,.definition.type >header .arguments .argument{padding:0;}.definition.callable >header .arguments .argument.lambda-list-keyword,.definition.type >header .arguments .argument.lambda-list-keyword{color:#991155;}.definition li>mark{background:none;border-left:0.3em solid #0088EE;padding-left:0.3em;display:block;}@media (min-width: 1300px){html body{padding-left:16em;}article.project #toc{margin:0;position:fixed;left:0;top:0;bottom:0;width:15em;overflow-y:auto;background:#F0F0F0;border-right:1px solid #A0A0A0;}}</style> </head> <body> <article class="project"> <header>   <h1>cl sf3</h1>   <span class="version">1.0.0</span>    <p class="description">A library to parse and create SF3 files.</p>   </header> <section id="toc"> <h2>Table of Contents</h2> <nav> <a href="#project">Top</a>  <a href="#documentation">Documentation</a> <nav> <a href="#about cl-sf3">About cl-sf3</a>  <a href="#how to">How To</a> </nav>  <a href="#system">System</a>  <a href="#system">Packages</a> <nav> <a href="#PACKAGE%20ORG.SHIRAKUMO.SF3">ORG.SHIRAKUMO.SF3</a> </nav>  </nav> </section>  <section id="documentation"><article><h1 id="about cl-sf3">About cl-sf3</h1><p>This is an implementation of the <a class="external-link" href="https://shirakumo.org/docs/sf3">SF3 (Simple File Format Family)</a> standard. It provides easy parsing and creation of SF3 formatted files. Included are formats for images, audio, 3D models, rich text, logging, archives, and more.</p><h2 id="how to">How To</h2><p>In order to parse an SF3 file of any type, simply use <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">read-sf3</a></code>. It will return an <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">archive</a></code>, <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">audio</a></code>, <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">image</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">log</a></code>, <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">model</a></code>, <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">physics-model</a></code>, <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">table</a></code>, <code><a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">text</a></code>, or <code><a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">vector-graphic</a></code> instance. In order to determine what type of file it is before parsing it fully, you can use <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">tell-sf3</a></code>. And in order to serialise an instance to file, you can similarly use <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">write-sf3</a></code>.</p><p>As per usual for systems like this that are implemented via <a class="external-link" href="https://shinmera.com/docs/binary-structures">binary-structures</a> you can use pathnames, binary streams, octet-vectors, and foreign memory pointers as the <code>storage</code> object.</p><p>In order to construct the instances, each instance type has its own function prefixed with <code>make-</code>: <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ARCHIVE" class="xref">make-archive</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-AUDIO" class="xref">make-audio</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-IMAGE" class="xref">make-image</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG" class="xref">make-log</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MODEL" class="xref">make-model</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-PHYSICS-MODEL" class="xref">make-physics-model</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TABLE" class="xref">make-table</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TEXT" class="xref">make-text</a></code>, <code><a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-VECTOR-GRAPHIC" class="xref">make-vector-graphic</a></code>.</p><p>Finally, you can also get the specified file extension for a type via <code><a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILE-EXTENSION" class="xref">file-extension</a></code>, and its mime-type via <code><a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMIME-TYPE" class="xref">mime-type</a></code>.</p><p>If you only have use of specific file formats, you can load support for only those formats by loading <code>cl-sf3/audio</code>, etc.</p></article></section>    <section id="system"> <h2>System Information</h2>  <div class="row"> <label for="version">Version:</label> <a id="version">1.0.0</a> </div>   <div class="row"> <label for="dependencies">Dependencies:</label> <ul id="dependencies"><li><a class="external">cl-sf3/archive</a></li><li><a class="external">cl-sf3/audio</a></li><li><a class="external">cl-sf3/image</a></li><li><a class="external">cl-sf3/log</a></li><li><a class="external">cl-sf3/model</a></li><li><a class="external">cl-sf3/physics-model</a></li><li><a class="external">cl-sf3/table</a></li><li><a class="external">cl-sf3/text</a></li><li><a class="external">cl-sf3/vector-graphic</a></li></ul> </div>   <div class="row" id="author"> <label for="author">Author:</label> <a href="mailto:shinmera@tymoon.eu">Yukari Hafner</a> </div>   <div class="row"> <label for="license">License:</label> <a id="license" href="https://tldrlegal.com/search?q=zlib">zlib</a> </div>   <div class="row"> <label for="homepage">Homepage:</label> <a id="homepage" href="https://shirakumo.org/docs/cl-sf3">https://shirakumo.org/docs/cl-sf3</a> </div>   <div class="row"> <label for="bug-tracker">Bug Tracker:</label> <a id="bug-tracker" href="https://shirakumo.org/projects/cl-sf3/issues">https://shirakumo.org/projects/cl-sf3/issues</a> </div>   <div class="row"> <label for="sources">Sources:</label> <a id="sources" href="https://shirakumo.org/projects/cl-sf3.git">https://shirakumo.org/projects/cl-sf3.git</a> </div>  </section>    <section id="index"> <h2>Definition Index</h2> <ul> <li> <article class="definition package" id="PACKAGE ORG.SHIRAKUMO.SF3"> <header> <h3> <a href="#PACKAGE%20ORG.SHIRAKUMO.SF3">ORG.SHIRAKUMO.SF3</a> </h3> <ul class="nicknames"></ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> <ul class="definitions"> <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:ARCHIVE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE">ARCHIVE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/archive.lisp#11:0">Source</a>  </header> <div class="docstring"><pre>Representation of an archive file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ARCHIVE" class="xref">MAKE-ARCHIVE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMETA-ENTRIES" class="xref">META-ENTRIES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILES" class="xref">FILES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AADD-FILE" class="xref">ADD-FILE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AEXTRACT-FILE" class="xref">EXTRACT-FILE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:ARCHIVE-META-ENTRY"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY">ARCHIVE-META-ENTRY</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/archive.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of an archive file metadata entry.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ARCHIVE-META-ENTRY" class="xref">MAKE-ARCHIVE-META-ENTRY</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMODIFICATION-TIME" class="xref">MODIFICATION-TIME</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHECKSUM" class="xref">CHECKSUM</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMIME-TYPE" class="xref">MIME-TYPE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APATH" class="xref">PATH</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:AUDIO"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO">AUDIO</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/audio.lisp#17:0">Source</a>  </header> <div class="docstring"><pre>Representation of an audio file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-AUDIO" class="xref">MAKE-AUDIO</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ADURATION" class="xref">DURATION</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASAMPLERATE" class="xref">SAMPLERATE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHANNELS" class="xref">CHANNELS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHANNEL-LAYOUT" class="xref">CHANNEL-LAYOUT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASAMPLE-FORMAT" class="xref">SAMPLE-FORMAT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASAMPLES" class="xref">SAMPLES</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:BOX"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ABOX">BOX</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#22:0">Source</a>  </header> <div class="docstring"><pre>Representation of a box shape.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-BOX" class="xref">MAKE-BOX</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AWIDTH" class="xref">WIDTH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ADEPTH" class="xref">DEPTH</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:CIRCLE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACIRCLE">CIRCLE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#78:0">Source</a>  </header> <div class="docstring"><pre>Representation of a circle.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ABOUNDS" class="xref">BOUNDS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL" class="xref">FILL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CIRCLE" class="xref">MAKE-CIRCLE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:COLOR"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR">COLOR</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of a color.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AR" class="xref">R</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AG" class="xref">G</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AB" class="xref">B</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AA" class="xref">A</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLOR" class="xref">MAKE-COLOR</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:COLOR-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR-OPTION">COLOR-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of a color markup option.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLOR-OPTION" class="xref">MAKE-COLOR-OPTION</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AR" class="xref">R</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AG" class="xref">G</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AB" class="xref">B</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMARKUP" class="xref">MARKUP (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:COLUMN-SPEC"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC">COLUMN-SPEC</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of the specification for a column in a table.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLUMN-SPEC" class="xref">MAKE-COLUMN-SPEC</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ANAME" class="xref">NAME</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AKIND" class="xref">KIND</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-TYPE" class="xref">COLUMN-SPEC-TYPE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-ELEMENT-SIZE" class="xref">COLUMN-SPEC-ELEMENT-SIZE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-ELEMENT-COUNT" class="xref">COLUMN-SPEC-ELEMENT-COUNT</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:CURVE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACURVE">CURVE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#98:0">Source</a>  </header> <div class="docstring"><pre>Representation of a shape with a Bezier curve outline.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINTS" class="xref">POINTS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL" class="xref">FILL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CURVE" class="xref">MAKE-CURVE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:CYLINDER"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACYLINDER">CYLINDER</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#35:0">Source</a>  </header> <div class="docstring"><pre>Representation of a cylindrical shape.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CYLINDER" class="xref">MAKE-CYLINDER</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ABOTTOM-RADIUS" class="xref">BOTTOM-RADIUS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATOP-RADIUS" class="xref">TOP-RADIUS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:ELLIPSOID"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID">ELLIPSOID</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#9:0">Source</a>  </header> <div class="docstring"><pre>Representation of an ellipsoid shape.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ELLIPSOID" class="xref">MAKE-ELLIPSOID</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AWIDTH" class="xref">WIDTH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ADEPTH" class="xref">DEPTH</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:HEADING-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AHEADING-OPTION">HEADING-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#23:0">Source</a>  </header> <div class="docstring"><pre>Representation of a heading markup option.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-HEADING-OPTION" class="xref">MAKE-HEADING-OPTION</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ALEVEL" class="xref">LEVEL</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:IMAGE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE">IMAGE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/image.lisp#17:0">Source</a>  </header> <div class="docstring"><pre>Representation of an image file.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AWIDTH" class="xref">WIDTH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ADEPTH" class="xref">DEPTH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHANNELS" class="xref">CHANNELS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-FORMAT" class="xref">PIXEL-FORMAT</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-TYPE" class="xref">PIXEL-TYPE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-STRIDE" class="xref">PIXEL-STRIDE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXELS" class="xref">PIXELS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:LINE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINE">LINE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#56:0">Source</a>  </header> <div class="docstring"><pre>Representation of a segmented line.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINTS" class="xref">POINTS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATHICKNESS" class="xref">THICKNESS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LINE" class="xref">MAKE-LINE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:LINK-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINK-OPTION">LINK-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#31:0">Source</a>  </header> <div class="docstring"><pre>Representation of a link markup option.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AADDRESS" class="xref">ADDRESS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LINK-OPTION" class="xref">MAKE-LINK-OPTION</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:LOG"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG">LOG</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#68:0">Source</a>  </header> <div class="docstring"><pre>Representation of a log file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG" class="xref">MAKE-LOG</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASTART-TIME" class="xref">START-TIME</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AEND-TIME" class="xref">END-TIME</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHUNKS" class="xref">CHUNKS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG-APPEND-CHUNK" class="xref">LOG-APPEND-CHUNK</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG-APPEND-ENTRY-EXTEND" class="xref">LOG-APPEND-ENTRY-EXTEND</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:LOG-CHUNK"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-CHUNK">LOG-CHUNK</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#28:0">Source</a>  </header> <div class="docstring"><pre>Representation of a chunk of log entries in a log file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-CHUNK" class="xref">MAKE-LOG-CHUNK</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AENTRIES" class="xref">ENTRIES</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:LOG-ENTRY"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY">LOG-ENTRY</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of a single entry in a log file.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATIME" class="xref">TIME</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASEVERITY" class="xref">SEVERITY</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASOURCE" class="xref">SOURCE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACATEGORY" class="xref">CATEGORY</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMESSAGE" class="xref">MESSAGE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-ENTRY" class="xref">MAKE-LOG-ENTRY</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:MARKUP"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMARKUP">MARKUP</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#60:0">Source</a>  </header> <div class="docstring"><pre>Representation of a markup section.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MARKUP" class="xref">MAKE-MARKUP</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASTART" class="xref">START</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AEND" class="xref">END</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AOPTION" class="xref">OPTION</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:MESH"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMESH">MESH</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#61:0">Source</a>  </header> <div class="docstring"><pre>Representation of a convex mesh shape.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MESH" class="xref">MAKE-MESH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTICES" class="xref">VERTICES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:MODEL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL">MODEL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/model.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of a 3D model file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MODEL" class="xref">MAKE-MODEL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-ATTRIBUTES" class="xref">VERTEX-ATTRIBUTES</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-STRIDE" class="xref">VERTEX-STRIDE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURE-TYPES" class="xref">TEXTURE-TYPES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURES" class="xref">TEXTURES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFACES" class="xref">FACES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTICES" class="xref">VERTICES</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:PHYSICS-MODEL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL">PHYSICS-MODEL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#83:0">Source</a>  </header> <div class="docstring"><pre>Representation of a physics model.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-PHYSICS-MODEL" class="xref">MAKE-PHYSICS-MODEL</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMASS" class="xref">MASS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATENSOR" class="xref">TENSOR</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASHAPES" class="xref">SHAPES</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:PILL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APILL">PILL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#48:0">Source</a>  </header> <div class="docstring"><pre>Representation of a pill-box shape.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-PILL" class="xref">MAKE-PILL</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ABOTTOM-RADIUS" class="xref">BOTTOM-RADIUS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATOP-RADIUS" class="xref">TOP-RADIUS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:POINT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOINT">POINT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#17:0">Source</a>  </header> <div class="docstring"><pre>Representation of a position on the canvas.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AX" class="xref">X</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AY" class="xref">Y</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-POINT" class="xref">MAKE-POINT</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:POLYGON"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOLYGON">POLYGON</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#88:0">Source</a>  </header> <div class="docstring"><pre>Representation of a closed polygon.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINTS" class="xref">POINTS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL" class="xref">FILL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-POLYGON" class="xref">MAKE-POLYGON</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:RECTANGLE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ARECTANGLE">RECTANGLE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#68:0">Source</a>  </header> <div class="docstring"><pre>Representation of a rectangle.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ABOUNDS" class="xref">BOUNDS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL" class="xref">FILL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-RECTANGLE" class="xref">MAKE-RECTANGLE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:SF3-FILE-HEADER"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASF3-FILE-HEADER">SF3-FILE-HEADER</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Representation of the generic header of an SF3 file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SF3-FILE-HEADER" class="xref">MAKE-SF3-FILE-HEADER</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AKIND" class="xref">KIND</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHECKSUM" class="xref">CHECKSUM</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:SHAPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE">SHAPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#72:0">Source</a>  </header> <div class="docstring"><pre>Representation of an arbitrary physics shape.
+
+You can also access the inner shape's attributes through this object
+without needing to unpack the inner shape first.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE" class="xref">MAKE-SHAPE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATRANSFORM" class="xref">TRANSFORM</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ADATA" class="xref">DATA</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:SHAPE-BOUNDS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-BOUNDS">SHAPE-BOUNDS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#49:0">Source</a>  </header> <div class="docstring"><pre>Representation of the bounds of a shape.
+
+The POINT defines the lower left corner, and the SIZE the extent of
+the shape.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINT" class="xref">POINT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-BOUNDS" class="xref">MAKE-SHAPE-BOUNDS</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:SHAPE-FILL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-FILL">SHAPE-FILL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#37:0">Source</a>  </header> <div class="docstring"><pre>Representation of the shape fill parameters.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL-COLOR" class="xref">FILL-COLOR</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AOUTLINE-COLOR" class="xref">OUTLINE-COLOR</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AOUTLINE-THICKNESS" class="xref">OUTLINE-THICKNESS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-FILL" class="xref">MAKE-SHAPE-FILL</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:SIZE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE">SIZE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#27:0">Source</a>  </header> <div class="docstring"><pre>Representation of an extent on the canvas.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AW" class="xref">W</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AH" class="xref">H</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SIZE" class="xref">MAKE-SIZE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:SIZE-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE-OPTION">SIZE-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#15:0">Source</a>  </header> <div class="docstring"><pre>Representation of a font size markup option.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SIZE-OPTION" class="xref">MAKE-SIZE-OPTION</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFONT-SIZE" class="xref">FONT-SIZE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:TABLE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE">TABLE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#99:0">Source</a>  </header> <div class="docstring"><pre>Representation of a table.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TABLE" class="xref">MAKE-TABLE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-COUNT" class="xref">COLUMN-COUNT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW-COUNT" class="xref">ROW-COUNT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPECS" class="xref">COLUMN-SPECS</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW-DATA" class="xref">ROW-DATA</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW" class="xref">ROW</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACELL" class="xref">CELL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:TARGET-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATARGET-OPTION">TARGET-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#39:0">Source</a>  </header> <div class="docstring"><pre>Representation of a link target option.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AADDRESS" class="xref">ADDRESS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TARGET-OPTION" class="xref">MAKE-TARGET-OPTION</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:TEXT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT">TEXT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#68:0">Source</a>  </header> <div class="docstring"><pre>Representation of a text with markup.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TEXT" class="xref">MAKE-TEXT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMARKUP" class="xref">MARKUP</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:TEXT-SHAPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT-SHAPE">TEXT-SHAPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#108:0">Source</a>  </header> <div class="docstring"><pre>Representation of a text shape.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINT" class="xref">POINT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFONT" class="xref">FONT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFONT-SIZE" class="xref">FONT-SIZE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TEXT-SHAPE" class="xref">MAKE-TEXT-SHAPE</a></pre></div> </article> </li>  <li> <article class="definition structure" id="STRUCTURE ORG.SHIRAKUMO.SF3:VECTOR-GRAPHIC"> <header> <span class="visibility">EXTERNAL</span> <span class="type">STRUCTURE</span> <h4 class="name"> <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC">VECTOR-GRAPHIC</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments"></ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#124:0">Source</a>  </header> <div class="docstring"><pre>Representation of a vector graphic image.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AWIDTH" class="xref">WIDTH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AINSTRUCTIONS" class="xref">INSTRUCTIONS</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-VECTOR-GRAPHIC" class="xref">MAKE-VECTOR-GRAPHIC</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3" class="xref">WRITE-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:CELL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACELL">CELL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">TABLE</li>    <li class="argument">ROW</li>    <li class="argument">COLUMN</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#136:0">Source</a>  </header> <div class="docstring"><pre>Accesses the specified cell contents of the table.
+
+If the cell contains multiple elements, it is encoded as a list.
+When setting a cell, you may similarly set a list of elements, or a
+single element value.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:(SETF CELL)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20CELL%29">(SETF CELL)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">TABLE</li>    <li class="argument">ROW</li>    <li class="argument">COLUMN</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#153:0">Source</a>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:COLUMN-SPEC-ELEMENT-COUNT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-ELEMENT-COUNT">COLUMN-SPEC-ELEMENT-COUNT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">SPEC</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#94:0">Source</a>  </header> <div class="docstring"><pre>Returns the number of elements stored in the column.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AKIND" class="xref">KIND</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-ELEMENT-SIZE" class="xref">COLUMN-SPEC-ELEMENT-SIZE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC" class="xref">COLUMN-SPEC (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:COLUMN-SPEC-ELEMENT-SIZE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-ELEMENT-SIZE">COLUMN-SPEC-ELEMENT-SIZE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">SPEC</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#91:0">Source</a>  </header> <div class="docstring"><pre>Returns the octet size of an element in the column.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AKIND" class="xref">KIND</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC" class="xref">COLUMN-SPEC (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:COLUMN-SPEC-TYPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-TYPE">COLUMN-SPEC-TYPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">SPEC</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#19:0">Source</a>  </header> <div class="docstring"><pre>Returns the type of the column data.
+
+This can be one of:
+  :uint8
+  :uint16
+  :uint32
+  :uint64
+  :sint8
+  :sint16
+  :sint32
+  :sint64
+  :float16
+  :float32
+  :float64
+  :string
+  :timestamp
+  :high-resolution-timestamp
+  :boolean
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AKIND" class="xref">KIND</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC" class="xref">COLUMN-SPEC (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:DURATION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ADURATION">DURATION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">AUDIO</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/audio.lisp#46:0">Source</a>  </header> <div class="docstring"><pre>Returns the duration of the audio data contained in seconds as a float.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:LOG"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG">LOG</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">LOG</li>    <li class="argument">MESSAGE</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">ENTRY-ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#91:0">Source</a>  </header> <div class="docstring"><pre>Create a new log entry and append it.
+
+This is the same as invoking MAKE-LOG-ENTRY and
+LOG-APPEND-ENTRY-EXTEND.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-ENTRY" class="xref">MAKE-LOG-ENTRY</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG-APPEND-ENTRY-EXTEND" class="xref">LOG-APPEND-ENTRY-EXTEND</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:LOG-APPEND-CHUNK"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG-APPEND-CHUNK">LOG-APPEND-CHUNK</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">LOG</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#79:0">Source</a>  </header> <div class="docstring"><pre>Append a new chunk to the log.
+
+ARGS are passed on to MAKE-LOG-CHUNK.
+The LOG is returned again.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-CHUNK" class="xref">MAKE-LOG-CHUNK</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:LOG-APPEND-ENTRY-EXTEND"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG-APPEND-ENTRY-EXTEND">LOG-APPEND-ENTRY-EXTEND</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">LOG</li>    <li class="argument">ENTRY</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#83:0">Source</a>  </header> <div class="docstring"><pre>Append a new entry to the log, creating a new chunk if necessary.
+
+ARGS are passed on to MAKE-LOG-CHUNK.
+The LOG is returned again.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-ARCHIVE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ARCHIVE">MAKE-ARCHIVE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">FILES</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/archive.lisp#24:0">Source</a>  </header> <div class="docstring"><pre>Create a new file archive
+
+FILES should be a list of file specs, where a file spec is
+
+  (FILE ...args)
+  FILE
+
+and will be passed to ADD-FILE, filling in the ARCHIVE argument.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AADD-FILE" class="xref">ADD-FILE</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-ARCHIVE-META-ENTRY"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ARCHIVE-META-ENTRY">MAKE-ARCHIVE-META-ENTRY</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">MODIFICATION-TIME</li>    <li class="argument">CHECKSUM</li>    <li class="argument">MIME-TYPE</li>    <li class="argument">PATH</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/archive.lisp#3:0">Source</a>  </header> <div class="docstring"><pre>Create an archive metadata entry.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-AUDIO"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-AUDIO">MAKE-AUDIO</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">SAMPLES</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">SAMPLERATE</li>    <li class="argument">CHANNELS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/audio.lisp#39:0">Source</a>  </header> <div class="docstring"><pre>Create a new audio file.
+
+SAMPLES should be a vector with raw audio samples. The sample format
+is inferred from the element-type of the vector. As such, you must
+ensure the array is of the appropriate format. The array must also
+have a multiple of CHANNELS elements.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-BOX"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-BOX">MAKE-BOX</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">W</li>    <li class="argument">H</li>    <li class="argument">D</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TRANSFORM</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#27:0">Source</a>  </header> <div class="docstring"><pre>Create a new box shape.
+
+If the TRANSFORM is omitted, it is set to the identity matrix.
+Otherwise it should be a 4x4 matrix in the form of a sequence of 16
+single-floats.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-CIRCLE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CIRCLE">MAKE-CIRCLE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">X</li>    <li class="argument">Y</li>    <li class="argument">W</li>    <li class="argument">H</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">FILL-ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#82:0">Source</a>  </header> <div class="docstring"><pre>Create a new circle instance.
+
+X and Y should be the lower left corner coordinates, and W and H the
+dimensions of the circle.
+FILL-ARGS are passed verbatim to MAKE-SHAPE-FILL
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-FILL" class="xref">MAKE-SHAPE-FILL</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACIRCLE" class="xref">CIRCLE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-COLOR"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLOR">MAKE-COLOR</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">R</li>    <li class="argument">G</li>    <li class="argument">B</li>    <li class="argument lambda-list-keyword">&amp;OPTIONAL</li>    <li class="argument">A</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#9:0">Source</a>  </header> <div class="docstring"><pre>Create a new color instance.
+
+R G B and A should be numbers in the range [0,1] to indicate the value
+of the corresponding color channel.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-COLOR-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLOR-OPTION">MAKE-COLOR-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">START</li>    <li class="argument">END</li>    <li class="argument lambda-list-keyword">&amp;OPTIONAL</li>    <li class="argument">R</li>    <li class="argument">G</li>    <li class="argument">B</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#8:0">Source</a>  </header> <div class="docstring"><pre>Create a new color markup option.
+
+The values should be in the range of [0,1].
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR-OPTION" class="xref">COLOR-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-COLUMN-SPEC"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLUMN-SPEC">MAKE-COLUMN-SPEC</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">NAME</li>    <li class="argument lambda-list-keyword">&amp;OPTIONAL</li>    <li class="argument">TYPE</li>    <li class="argument">LENGTH</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#8:0">Source</a>  </header> <div class="docstring"><pre>Create a new column specification.
+
+LENGTH is automatically converted to the octet-size of a multiple of
+the TYPE, except for if the TYPE is :STRING, in which case the LENGTH
+is taken to be the maximum length of the string in octets.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC" class="xref">COLUMN-SPEC (type)</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-TYPE" class="xref">COLUMN-SPEC-TYPE</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-CURVE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CURVE">MAKE-CURVE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">POINTS</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">FILL-ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#102:0">Source</a>  </header> <div class="docstring"><pre>Create a new curve instance.
+
+POINTS should be a sequence of POINT instances defining the Bezier
+curve segments of the outline. Each outline segment is made up of four
+points, the first and last being the edge points and the second and
+third being the corresponding control points. For successive segments
+the first and final edge point are shared as no gaps between segments
+are allowed anyway.
+FILL-ARGS are passed verbatim to MAKE-SHAPE-FILL
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-FILL" class="xref">MAKE-SHAPE-FILL</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACURVE" class="xref">CURVE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-CYLINDER"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CYLINDER">MAKE-CYLINDER</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">BOTTOM-RADIUS</li>    <li class="argument">TOP-RADIUS</li>    <li class="argument">HEIGHT</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TRANSFORM</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#40:0">Source</a>  </header> <div class="docstring"><pre>Create a new cylinder shape.
+
+If the TRANSFORM is omitted, it is set to the identity matrix.
+Otherwise it should be a 4x4 matrix in the form of a sequence of 16
+single-floats.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-ELLIPSOID"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ELLIPSOID">MAKE-ELLIPSOID</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">W</li>    <li class="argument">H</li>    <li class="argument">D</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TRANSFORM</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#14:0">Source</a>  </header> <div class="docstring"><pre>Create a new ellipsoid shape.
+
+If the TRANSFORM is omitted, it is set to the identity matrix.
+Otherwise it should be a 4x4 matrix in the form of a sequence of 16
+single-floats.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-HEADING-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-HEADING-OPTION">MAKE-HEADING-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">LEVEL</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#26:0">Source</a>  </header> <div class="docstring"><pre>Create a new heading markup option.
+
+The level should be a positive integer.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AHEADING-OPTION" class="xref">HEADING-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-IMAGE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-IMAGE">MAKE-IMAGE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">PIXELS</li>    <li class="argument">WIDTH</li>    <li class="argument">HEIGHT</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">DEPTH</li>    <li class="argument">PIXEL-TYPE</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/image.lisp#42:0">Source</a>  </header> <div class="docstring"><pre>Create a new image file.
+
+PIXELS should be a vector with raw pixel data. The pixel format
+is inferred from the element-type of the vector. As such, you must
+ensure the array is of the appropriate format. The array must also
+have a multiple of WIDTH*HEIGHT*DEPTH*CHANNELS elements.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-TYPE" class="xref">PIXEL-TYPE</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-LINE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LINE">MAKE-LINE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">POINTS</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">THICKNESS</li>    <li class="argument">COLOR</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#61:0">Source</a>  </header> <div class="docstring"><pre>Create a new line instance.
+
+POINTS should be a sequence of POINT instances.
+THICKNESS should be a positive number representing the thickness of
+the line in pixels.
+COLOR should be a COLOR instance describing the color of the line.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINE" class="xref">LINE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-LINK-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LINK-OPTION">MAKE-LINK-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ADDRESS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#34:0">Source</a>  </header> <div class="docstring"><pre>Create a new hyperlink markup option.
+
+The address should be a string naming the address of a corresponding
+target-option, or an URL.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATARGET-OPTION" class="xref">TARGET-OPTION (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINK-OPTION" class="xref">LINK-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-LOG"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG">MAKE-LOG</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">START-TIME</li>    <li class="argument">END-TIME</li>    <li class="argument">ENTRIES</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#73:0">Source</a>  </header> <div class="docstring"><pre>Create a new log instance.
+
+The START-TIME and END-TIME should be given as a UNIVERSAL-TIME
+timestamp and are converted to UNIX time for you. If END-TIME is not
+given, the time is set to the maximal possible value, indicating that
+the log file is not yet complete.
+
+ENTRIES specifies the number of entries to allocate for in the first
+chunk of the log file.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-CHUNK" class="xref">MAKE-LOG-CHUNK</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AEND-TIME" class="xref">END-TIME</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-LOG-CHUNK"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-CHUNK">MAKE-LOG-CHUNK</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">ENTRIES</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#34:0">Source</a>  </header> <div class="docstring"><pre>Create a new log chunk.
+
+The ENTRIES count is the number of entries that the chunk will be
+capable of storing.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-CHUNK" class="xref">LOG-CHUNK (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-LOG-ENTRY"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-LOG-ENTRY">MAKE-LOG-ENTRY</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">MESSAGE</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TIME</li>    <li class="argument">SEVERITY</li>    <li class="argument">SOURCE</li>    <li class="argument">CATEGORY</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/log.lisp#11:0">Source</a>  </header> <div class="docstring"><pre>Create a new log entry.
+
+The size of the entry is automatically computed based on the other
+attributes. The TIME is given in UNIVERSAL-TIME format and
+automatically converted to UNIX time for you.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-MARKUP"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MARKUP">MAKE-MARKUP</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">START</li>    <li class="argument">END</li>    <li class="argument">OPTION</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#65:0">Source</a>  </header> <div class="docstring"><pre>Create a new markup section.
+
+The START and END should be indices for the range of text to mark up,
+where the END defines the index after which the option no longer
+applies.
+
+START and END must be positive integers, and END must be greater or
+equal to START.
+
+OPTION should be a valid markup option type:
+
+  :BOLD
+  :ITALIC
+  :UNDERLINE
+  :STRIKE
+  :MONO
+  COLOR-OPTION
+  SIZE-OPTION
+  HEADING-OPTION
+  LINK-OPTION
+  TARGET-OPTION
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMARKUP" class="xref">MARKUP (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-MESH"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MESH">MAKE-MESH</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VERTICES</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TRANSFORM</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#65:0">Source</a>  </header> <div class="docstring"><pre>Create a new mesh shape.
+
+VERTICES should be a sequence of single-floats, three of which each
+describe a vertex' position. The vertices should collectively form a
+convex hull.
+
+If the TRANSFORM is omitted, it is set to the identity matrix.
+Otherwise it should be a 4x4 matrix in the form of a sequence of 16
+single-floats.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-MODEL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MODEL">MAKE-MODEL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">FACES</li>    <li class="argument">VERTICES</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">VERTEX-ATTRIBUTES</li>    <li class="argument">MATERIAL</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/model.lisp#11:0">Source</a>  </header> <div class="docstring"><pre>Create a new 3D model instance.
+
+FACES should be an (UNSIGNED-BYTE 32) array of vertex indices, and
+VERTICES should be a SINGLE-FLOAT array of vertex attributes.
+
+VERTEX-ATTRIBUTES should be the set of attributes as stored in
+VERTICES. The attributes as stored in VERTICES MUST follow the order
+of the attributes outlined in this set. The possible sets of
+attributes can be seen in VERTEX-ATTRIBUTES.
+
+MATERIAL should be a property list of relative paths to material
+textures. The set of permissible keys can be seen in TEXTURE-TYPES.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-ATTRIBUTES" class="xref">VERTEX-ATTRIBUTES</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURE-TYPES" class="xref">TEXTURE-TYPES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-PHYSICS-MODEL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-PHYSICS-MODEL">MAKE-PHYSICS-MODEL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">MASS</li>    <li class="argument">TENSOR</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">SHAPES</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#88:0">Source</a>  </header> <div class="docstring"><pre>Create a new physics model.
+
+The MASS should be expressed in Kg. The TENSOR should be a sequence of
+9 single-floats, describing the overall inertia tensor of the entire
+model.
+
+SHAPES should be the SHAPE instances that make up the physics model's
+hull.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-ELLIPSOID" class="xref">MAKE-ELLIPSOID</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-BOX" class="xref">MAKE-BOX</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-CYLINDER" class="xref">MAKE-CYLINDER</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-PILL" class="xref">MAKE-PILL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-MESH" class="xref">MAKE-MESH</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-PILL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-PILL">MAKE-PILL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">BOTTOM-RADIUS</li>    <li class="argument">TOP-RADIUS</li>    <li class="argument">HEIGHT</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TRANSFORM</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#53:0">Source</a>  </header> <div class="docstring"><pre>Create a new pill shape.
+
+If the TRANSFORM is omitted, it is set to the identity matrix.
+Otherwise it should be a 4x4 matrix in the form of a sequence of 16
+single-floats.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-POINT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-POINT">MAKE-POINT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">X</li>    <li class="argument">Y</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#21:0">Source</a>  </header> <div class="docstring"><pre>Create a new point instance.
+
+X and Y should be coordinates of the position.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOINT" class="xref">POINT (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-POLYGON"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-POLYGON">MAKE-POLYGON</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">POINTS</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">FILL-ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#92:0">Source</a>  </header> <div class="docstring"><pre>Create a new polygon instance.
+
+POINTS should be a sequence of POINT instances defining the edges of
+the outline of the polygon.
+FILL-ARGS are passed verbatim to MAKE-SHAPE-FILL
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-FILL" class="xref">MAKE-SHAPE-FILL</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOLYGON" class="xref">POLYGON (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-RECTANGLE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-RECTANGLE">MAKE-RECTANGLE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">X</li>    <li class="argument">Y</li>    <li class="argument">W</li>    <li class="argument">H</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">FILL-ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#72:0">Source</a>  </header> <div class="docstring"><pre>Create a new rectangle instance.
+
+X and Y should be the lower left corner coordinates, and W and H the
+dimensions of the rectangle.
+FILL-ARGS are passed verbatim to MAKE-SHAPE-FILL
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-FILL" class="xref">MAKE-SHAPE-FILL</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ARECTANGLE" class="xref">RECTANGLE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-SF3-FILE-HEADER"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SF3-FILE-HEADER">MAKE-SF3-FILE-HEADER</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">KIND</li>    <li class="argument lambda-list-keyword">&amp;OPTIONAL</li>    <li class="argument">CHECKSUM</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#18:0">Source</a>  </header> <div class="docstring"><pre>Create a new SF3-FILE-HEADER instance.
+
+The KIND should name the type of file format stored.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASF3-FILE-HEADER" class="xref">SF3-FILE-HEADER (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-SHAPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE">MAKE-SHAPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">TRANSFORM</li>    <li class="argument">DATA</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/physics-model.lisp#72:0">Source</a>  </header> <div class="docstring"><pre>Create a new shape.
+
+This is typically not necessary as the shape constructors individually
+automatically wrap the shape data in a SHAPE instance.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-SHAPE-BOUNDS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-BOUNDS">MAKE-SHAPE-BOUNDS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">X</li>    <li class="argument">Y</li>    <li class="argument">W</li>    <li class="argument">H</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#53:0">Source</a>  </header> <div class="docstring"><pre>Create a new shape-bounds instance.
+
+X and Y should be the lower left corner coordinates, and W and H the
+dimensions of the extent.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-BOUNDS" class="xref">SHAPE-BOUNDS (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-SHAPE-FILL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SHAPE-FILL">MAKE-SHAPE-FILL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">FILL-COLOR</li>    <li class="argument">OUTLINE-COLOR</li>    <li class="argument">OUTLINE-THICKNESS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#42:0">Source</a>  </header> <div class="docstring"><pre>Create a new shape-fill instance.
+
+FILL-COLOR and OUTLINE-COLOR should be COLOR instances.
+OUTLINE-THICKNESS should be a positive number representing the
+thickness of the outline in pixels.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-FILL" class="xref">SHAPE-FILL (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-SIZE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SIZE">MAKE-SIZE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">W</li>    <li class="argument">H</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#31:0">Source</a>  </header> <div class="docstring"><pre>Create a new size instance.
+
+W and H should be positive numbers representing the dimensions of the
+extent.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-SIZE-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-SIZE-OPTION">MAKE-SIZE-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">FONT-SIZE</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#18:0">Source</a>  </header> <div class="docstring"><pre>Create a new size markup option.
+
+The size should be a positive number.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE-OPTION" class="xref">SIZE-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-TABLE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TABLE">MAKE-TABLE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">COLUMNS</li>    <li class="argument">DATA</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#107:0">Source</a>  </header> <div class="docstring"><pre>Create a new table.
+
+COLUMNS should be specifications of the columns in the table, where
+each spec should be either a COLUMN-SPEC instance, a list of arguments
+to MAKE-COLUMN-SPEC, or a string to pass to MAKE-COLUMN-SPEC.
+
+The DATA should be a sequence of sequences, where each inner sequence
+must have the same number of entries as COLUMNS. In cases where a
+column can hold multiple elements, the cells for this column may
+either be specified via a single element, or a list of elements.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACELL" class="xref">CELL</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-COLUMN-SPEC" class="xref">MAKE-COLUMN-SPEC</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-TARGET-OPTION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TARGET-OPTION">MAKE-TARGET-OPTION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ADDRESS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#42:0">Source</a>  </header> <div class="docstring"><pre>Create a new link target markup option.
+
+The address should be a string naming the target.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATARGET-OPTION" class="xref">TARGET-OPTION (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINK-OPTION" class="xref">LINK-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-TEXT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TEXT">MAKE-TEXT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">TEXT</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">MARKUP</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/text.lisp#75:0">Source</a>  </header> <div class="docstring"><pre>Create a new text instance.
+
+TEXT should be a string to mark up.
+MARKUP should be a number of markup specs, which can either be a
+MARKUP instance, or a list composed of a START and END index and
+either a valid markup option instance, or the name of an option and
+the arguments for its corresponding constructor.
+
+For example (0 1 :COLOR 1 0 0) or simply (0 1 :BOLD).
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-TEXT-SHAPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-TEXT-SHAPE">MAKE-TEXT-SHAPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">X</li>    <li class="argument">Y</li>    <li class="argument">TEXT</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">COLOR</li>    <li class="argument">FONT</li>    <li class="argument">FONT-SIZE</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#115:0">Source</a>  </header> <div class="docstring"><pre>Create a new text-shape instance.
+
+X and Y define the point in the middle of the baseline of the first
+character in the TEXT. COLOR should be a COLOR instance to define the
+&quot;foreground&quot; color of the text. FONT should be a string identifier
+of the font family to use for the text. FONT-SIZE should be a positive
+number defining the height of a text line in pixels.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT-SHAPE" class="xref">TEXT-SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:MAKE-VECTOR-GRAPHIC"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AMAKE-VECTOR-GRAPHIC">MAKE-VECTOR-GRAPHIC</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">WIDTH</li>    <li class="argument">HEIGHT</li>    <li class="argument">INSTRUCTIONS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/vector-graphic.lisp#139:0">Source</a>  </header> <div class="docstring"><pre>Create a new vector graphic image.
+
+WIDTH and HEIGHT should be the dimensions of the image canvas.
+INSTRUCTIONS should be a sequence of drawing instructions, which may
+be one of the following:
+
+  LINE
+  RECTANGLE
+  CIRCLE
+  POLYGON
+  CURVE
+  TEXT-SHAPE
+  (ARRAY SINGLE-FLOAT (6))
+
+In the array case it represents a 3x2 transform matrix to be applied.
+to all following instructions until the next transform matrix.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:PIXEL-STRIDE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-STRIDE">PIXEL-STRIDE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">IMAGE</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/image.lisp#75:0">Source</a>  </header> <div class="docstring"><pre>Returns the number of elements that constitute a pixel.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:PIXEL-TYPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-TYPE">PIXEL-TYPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">IMAGE</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/image.lisp#61:0">Source</a>  </header> <div class="docstring"><pre>Returns the pixel type of the image file.
+
+The pixel type can be one of:
+
+  :V
+  :VA
+  :RGB
+  :RGBA
+  :AV
+  :BGR
+  :ABGR
+  :ARGB
+  :BGRA
+  :CMYK
+  :KYMC
+
+Which describes the color channel purpose and arrangement within the
+pixel data.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:READ-SF3"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3">READ-SF3</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">STORAGE</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#53:0">Source</a>  </header> <div class="docstring"><pre>Read an SF3 file from the given storage.
+
+Depending on the storage backend, additional arguments may be
+necessary. The following backends are supported:
+
+  PATHNAME
+  STREAM
+  OCTET-VECTOR (optionally accepts :START and :END key arguments)
+  FOREIGN-POINTER (requires a SIZE argument)
+
+If successful returns the format instance.
+If parsing fails, an error is signalled.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3" class="xref">TELL-SF3</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:ROW"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW">ROW</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">TABLE</li>    <li class="argument">ROW</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/table.lisp#132:0">Source</a>  </header> <div class="docstring"><pre>Returns the specified row contents of the table as a list.
+
+If a cell contains multiple elements, it is encoded as a list.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:TELL-SF3"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATELL-SF3">TELL-SF3</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">STORAGE</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#49:0">Source</a>  </header> <div class="docstring"><pre>Determine the type of SF3 file within the storage.
+
+Depending on the storage backend, additional arguments may be
+necessary. The following backends are supported:
+
+  PATHNAME
+  STREAM
+  OCTET-VECTOR (optionally accepts :START and :END key arguments)
+  FOREIGN-POINTER (requires a SIZE argument)
+
+If successful returns the type of file stored.
+If parsing of even the SF3 header fails, an error is signalled.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AREAD-SF3" class="xref">READ-SF3</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:TEXTURE-TYPES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURE-TYPES">TEXTURE-TYPES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">MODEL</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/model.lisp#66:0">Source</a>  </header> <div class="docstring"><pre>Returns the set of textures that makes up the material.
+
+The textures are stored in the order of the returned set.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURES" class="xref">TEXTURES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:UNIX-TO-UNIVERSAL-TIME"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIX-TO-UNIVERSAL-TIME">UNIX-TO-UNIVERSAL-TIME</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">UNIX-TIME</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/toolkit.lisp#62:0">Source</a>  </header> <div class="docstring"><pre>Convert a UNIX timestamp to a Common Lisp universal-time timestamp</pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:VERTEX-ATTRIBUTES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-ATTRIBUTES">VERTEX-ATTRIBUTES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">MODEL</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/model.lisp#46:0">Source</a>  </header> <div class="docstring"><pre>Returns the set of vertex attributes stored per vertex.
+
+These sets are possible:
+
+  (:position)
+  (:position :uv)
+  (:position :color)
+  (:position :normal)
+  (:position :uv :normal)
+  (:position :color :normal)
+  (:position :uv :normal :tangent)
+  (:position :color :normal :tangent)
+
+Each attribute corresponds to three float values in the vertices
+array, except for :UV which corresponds to two.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-STRIDE" class="xref">VERTEX-STRIDE</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:VERTEX-STRIDE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-STRIDE">VERTEX-STRIDE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">MODEL</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/model.lisp#57:0">Source</a>  </header> <div class="docstring"><pre>Returns the number of float values that constitute each vertex.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTICES" class="xref">VERTICES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition function callable" id="FUNCTION ORG.SHIRAKUMO.SF3:WRITE-SF3"> <header> <span class="visibility">EXTERNAL</span> <span class="type">FUNCTION</span> <h4 class="name"> <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AWRITE-SF3">WRITE-SF3</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">OBJECT</li>    <li class="argument">STORAGE</li>    <li class="argument lambda-list-keyword">&amp;REST</li>    <li class="argument">ARGS</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#77:0">Source</a>  </header> <div class="docstring"><pre>Write an SF3 file to the given storage.
+
+Depending on the storage backend, additional arguments may be
+necessary. The following backends are supported:
+
+  PATHNAME
+  STREAM
+  OCTET-VECTOR (optionally accepts :START and :END key arguments)
+  FOREIGN-POINTER (requires a SIZE argument)
+
+If successful returns the storage.
+If serialisation fails, an error is signalled.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:A"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AA">A</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the alpha channel of the color.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF A)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20A%29">(SETF A)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:ADD-FILE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AADD-FILE">ADD-FILE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">FILE</li>    <li class="argument">ARCHIVE</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">MIME-TYPE</li>    <li class="argument">PATH</li>    <li class="argument">MODIFICATION-TIME</li>  </ul>  </header> <div class="docstring"><pre>Add a new file to the archive.
+
+Returns the modified ARCHIVE.
+
+The FILE may be an octet-vector, string, or a pathname. In the former
+two cases you must also pass the PATH keyword argument. In all cases
+you may also specify the MIME-TYPE and MODIFICATION-TIME. If you do
+not, they are determined automatically.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILES" class="xref">FILES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMETA-ENTRIES" class="xref">META-ENTRIES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:ADDRESS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AADDRESS">ADDRESS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the address.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINK-OPTION" class="xref">LINK-OPTION (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATARGET-OPTION" class="xref">TARGET-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF ADDRESS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20ADDRESS%29">(SETF ADDRESS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:B"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AB">B</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the blue component of the color.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR-OPTION" class="xref">COLOR-OPTION (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF B)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20B%29">(SETF B)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:BOTTOM-RADIUS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ABOTTOM-RADIUS">BOTTOM-RADIUS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the bottom radius of the shape.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACYLINDER" class="xref">CYLINDER (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APILL" class="xref">PILL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF BOTTOM-RADIUS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20BOTTOM-RADIUS%29">(SETF BOTTOM-RADIUS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:BOUNDS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ABOUNDS">BOUNDS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the bounds of the shape.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-BOUNDS" class="xref">SHAPE-BOUNDS (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ARECTANGLE" class="xref">RECTANGLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACIRCLE" class="xref">CIRCLE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF BOUNDS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20BOUNDS%29">(SETF BOUNDS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:CATEGORY"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACATEGORY">CATEGORY</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the category of the entry.
+
+This is a string at most 255 characters long.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF CATEGORY)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20CATEGORY%29">(SETF CATEGORY)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:CHANNELS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHANNELS">CHANNELS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the channel information of the file.
+
+For audio files, this is the channel count.
+For image files, this is the pixel format identifier.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-TYPE" class="xref">PIXEL-TYPE</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHANNEL-LAYOUT" class="xref">CHANNEL-LAYOUT</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF CHANNELS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20CHANNELS%29">(SETF CHANNELS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:CHECKSUM"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHECKSUM">CHECKSUM</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the CRC32 checksum.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASF3-FILE-HEADER" class="xref">SF3-FILE-HEADER (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF CHECKSUM)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20CHECKSUM%29">(SETF CHECKSUM)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:CHUNKS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACHUNKS">CHUNKS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the chunks vector of the log.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-CHUNK" class="xref">LOG-CHUNK (type)</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ALOG-APPEND-CHUNK" class="xref">LOG-APPEND-CHUNK</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF CHUNKS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20CHUNKS%29">(SETF CHUNKS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:COLOR"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLOR">COLOR</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF COLOR)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20COLOR%29">(SETF COLOR)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:COLUMN-COUNT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-COUNT">COLUMN-COUNT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the number of columns in the table.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF COLUMN-COUNT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20COLUMN-COUNT%29">(SETF COLUMN-COUNT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:COLUMN-SPECS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPECS">COLUMN-SPECS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the vector of column specifications in the table.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC" class="xref">COLUMN-SPEC (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF COLUMN-SPECS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20COLUMN-SPECS%29">(SETF COLUMN-SPECS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:DATA"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ADATA">DATA</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the inner data of the physics shape.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF DATA)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20DATA%29">(SETF DATA)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:DEPTH"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ADEPTH">DEPTH</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the depth of the object.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ABOX" class="xref">BOX (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF DEPTH)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20DEPTH%29">(SETF DEPTH)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:END-TIME"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AEND-TIME">END-TIME</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the ending time of the log.
+
+This is a UNIX timestamp. If the timestamp is equivalent to the most
+positive 63 bit number, the end time is considered to be
+&quot;tentative&quot; and the log file unfinished.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIX-TO-UNIVERSAL-TIME" class="xref">UNIX-TO-UNIVERSAL-TIME</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIVERSAL-TO-UNIX-TIME" class="xref">UNIVERSAL-TO-UNIX-TIME</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF END-TIME)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20END-TIME%29">(SETF END-TIME)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:ENTRIES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AENTRIES">ENTRIES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the vector of log-entries in the chunk.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-CHUNK" class="xref">LOG-CHUNK (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF ENTRIES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20ENTRIES%29">(SETF ENTRIES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:EXTRACT-FILE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AEXTRACT-FILE">EXTRACT-FILE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">FILE</li>    <li class="argument">ARCHIVE</li>    <li class="argument lambda-list-keyword">&amp;KEY</li>    <li class="argument">PATH</li>    <li class="argument">IF-EXISTS</li>    <li class="argument">VERIFY</li>    <li class="argument">PRESERVE-MODIFICATION-TIME</li>    <li class="argument lambda-list-keyword">&amp;ALLOW-OTHER-KEYS</li>  </ul>  </header> <div class="docstring"><pre>Extract a file from the archive to disk.
+
+FILE may either be the path of the file to extract, the index of the
+file, or T for all files.
+
+If VERIFY is true, the resulting file on disk is checked against the
+stored CRC-32 checksum.
+
+If PRESERVE-MODIFICATION-TIME is true, the resulting file will have
+the modification time as stored in the archive.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILES" class="xref">FILES</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMETA-ENTRIES" class="xref">META-ENTRIES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FACES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFACES">FACES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the vector of vertex indices that make up the faces.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF FACES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20FACES%29">(SETF FACES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FILE-EXTENSION"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILE-EXTENSION">FILE-EXTENSION</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">OBJECT</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#25:0">Source</a>  </header> <div class="docstring"><pre>Returns the file extension to be used with the given object or format type.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FILES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILES">FILES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the vector of file payloads.
+
+File payloads are stored as octet vectors.
+In order to get the associated file metadata, look at the
+ARCHIVE-META-ENTRY of the same index in the META-ENTRIES vector.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMETA-ENTRIES" class="xref">META-ENTRIES</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF FILES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20FILES%29">(SETF FILES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FILL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL">FILL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the fill description of the shape.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-FILL" class="xref">SHAPE-FILL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACURVE" class="xref">CURVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOLYGON" class="xref">POLYGON (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ARECTANGLE" class="xref">RECTANGLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACIRCLE" class="xref">CIRCLE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF FILL)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20FILL%29">(SETF FILL)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FILL-COLOR"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILL-COLOR">FILL-COLOR</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the fill color of the fill specification.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-FILL" class="xref">SHAPE-FILL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF FILL-COLOR)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20FILL-COLOR%29">(SETF FILL-COLOR)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FONT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFONT">FONT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the font-family descriptor of the text.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT-SHAPE" class="xref">TEXT-SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF FONT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20FONT%29">(SETF FONT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:FONT-SIZE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFONT-SIZE">FONT-SIZE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the font-size of the object.
+
+The size describes the height of a line of text from its baseline in
+pixels.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT-SHAPE" class="xref">TEXT-SHAPE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE-OPTION" class="xref">SIZE-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF FONT-SIZE)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20FONT-SIZE%29">(SETF FONT-SIZE)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:G"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AG">G</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the green component of the color.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR-OPTION" class="xref">COLOR-OPTION (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF G)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20G%29">(SETF G)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:H"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AH">H</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the HEIGHT extent of the size.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF H)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20H%29">(SETF H)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:HEIGHT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT">HEIGHT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the height of the object.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ABOX" class="xref">BOX (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APILL" class="xref">PILL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACYLINDER" class="xref">CYLINDER (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF HEIGHT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20HEIGHT%29">(SETF HEIGHT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:INSTRUCTIONS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AINSTRUCTIONS">INSTRUCTIONS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the vector of drawing instructions that make up the image.
+
+The elements may be instances of the following types:
+
+  LINE
+  RECTANGLE
+  CIRCLE
+  POLYGON
+  CURVE
+  TEXT-SHAPE
+  (ARRAY SINGLE-FLOAT (6))
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF INSTRUCTIONS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20INSTRUCTIONS%29">(SETF INSTRUCTIONS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:KIND"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AKIND">KIND</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the kind of the type stored.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC-TYPE" class="xref">COLUMN-SPEC-TYPE</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLUMN-SPEC" class="xref">COLUMN-SPEC (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASF3-FILE-HEADER" class="xref">SF3-FILE-HEADER (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF KIND)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20KIND%29">(SETF KIND)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:LEVEL"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ALEVEL">LEVEL</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the heading level.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AHEADING-OPTION" class="xref">HEADING-OPTION (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF LEVEL)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20LEVEL%29">(SETF LEVEL)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:MARKUP"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMARKUP">MARKUP</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF MARKUP)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20MARKUP%29">(SETF MARKUP)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:MASS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMASS">MASS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the mass of the overall physics model in Kg.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF MASS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20MASS%29">(SETF MASS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:MESSAGE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMESSAGE">MESSAGE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the message of the entry.
+
+This is mostly free-form, application-specific text about the log
+event.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF MESSAGE)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20MESSAGE%29">(SETF MESSAGE)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:META-ENTRIES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMETA-ENTRIES">META-ENTRIES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the vector of archive metadata entries.
+
+The metadata entries give you information about a file's path, type,
+and so on.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AFILES" class="xref">FILES</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF META-ENTRIES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20META-ENTRIES%29">(SETF META-ENTRIES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:MIME-TYPE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMIME-TYPE">MIME-TYPE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">OBJECT</li>  </ul>  <a class="source-link" href="file:///home/linus/Projects/cl/cl-sf3/sf3.lisp#37:0">Source</a>  </header> <div class="docstring"><pre>Access the media mime-type.
+
+You can also pass any SF3 file structure or its type to this to get
+its intended mime-type back.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE" class="xref">ARCHIVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF MIME-TYPE)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20MIME-TYPE%29">(SETF MIME-TYPE)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:MODIFICATION-TIME"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AMODIFICATION-TIME">MODIFICATION-TIME</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the modification time of the metadata entry.
+
+The modification time is a UNIX timestamp.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIX-TO-UNIVERSAL-TIME" class="xref">UNIX-TO-UNIVERSAL-TIME</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIVERSAL-TO-UNIX-TIME" class="xref">UNIVERSAL-TO-UNIX-TIME</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF MODIFICATION-TIME)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20MODIFICATION-TIME%29">(SETF MODIFICATION-TIME)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:OUTLINE-COLOR"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AOUTLINE-COLOR">OUTLINE-COLOR</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the outline color of the fill specification.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-FILL" class="xref">SHAPE-FILL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF OUTLINE-COLOR)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20OUTLINE-COLOR%29">(SETF OUTLINE-COLOR)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:OUTLINE-THICKNESS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AOUTLINE-THICKNESS">OUTLINE-THICKNESS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the outline thickness of the fill specification.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-FILL" class="xref">SHAPE-FILL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF OUTLINE-THICKNESS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20OUTLINE-THICKNESS%29">(SETF OUTLINE-THICKNESS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:PATH"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APATH">PATH</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the path of the file.
+
+This is a string describing a relative UNIX namestring for the related
+file.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AARCHIVE-META-ENTRY" class="xref">ARCHIVE-META-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF PATH)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20PATH%29">(SETF PATH)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:PIXEL-FORMAT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-FORMAT">PIXEL-FORMAT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the format of the pixel channel elements.
+
+This corresponds to the pixel data vector element-type.
+
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXELS" class="xref">PIXELS</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF PIXEL-FORMAT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20PIXEL-FORMAT%29">(SETF PIXEL-FORMAT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:PIXELS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXELS">PIXELS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the pixel data of the image.
+
+The vector contains the pixel data in &quot;row-major&quot; order, with
+channel data interleaved. Meaning to access a specific channel value
+the index is computed as:
+
+  channel + PIXEL-STRIDE * (x + WIDTH * (y + HEIGHT * d))
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3APIXEL-STRIDE" class="xref">PIXEL-STRIDE</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AWIDTH" class="xref">WIDTH</a>
+See <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AHEIGHT" class="xref">HEIGHT</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF PIXELS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20PIXELS%29">(SETF PIXELS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:POINT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINT">POINT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the lower left corner point of the extent.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-BOUNDS" class="xref">SHAPE-BOUNDS (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF POINT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20POINT%29">(SETF POINT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:POINTS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3APOINTS">POINTS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the vector of outline points of the shape.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOLYGON" class="xref">POLYGON (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACURVE" class="xref">CURVE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOINT" class="xref">POINT (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF POINTS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20POINTS%29">(SETF POINTS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:R"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AR">R</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the red component of the color.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR-OPTION" class="xref">COLOR-OPTION (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACOLOR" class="xref">COLOR (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF R)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20R%29">(SETF R)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:ROW-COUNT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW-COUNT">ROW-COUNT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the number of rows in the table.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF ROW-COUNT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20ROW-COUNT%29">(SETF ROW-COUNT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:ROW-DATA"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW-DATA">ROW-DATA</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the raw, encoded row data.
+
+The data is encoded as an octet vector.
+In order to decode data, please use the ROW and CELL functions.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AROW" class="xref">ROW</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ACELL" class="xref">CELL</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATABLE" class="xref">TABLE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF ROW-DATA)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20ROW-DATA%29">(SETF ROW-DATA)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SAMPLE-FORMAT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASAMPLE-FORMAT">SAMPLE-FORMAT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the sample format type of the audio file.
+
+May be one of:
+  :SINT8
+  :SINT16
+  :SINT32
+  :SINT64
+  :UINT8
+  :UINT16
+  :UINT32
+  :UINT64
+  :FLOAT16
+  :FLOAT32
+  :FLOAT64
+
+This will also correspond to the element-type of the SAMPLES array,
+except for :FLOAT16, which is encoded as (unsigned-byte 16) due to
+lack of support for short-floats in most implementations.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SAMPLE-FORMAT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SAMPLE-FORMAT%29">(SETF SAMPLE-FORMAT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SAMPLERATE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASAMPLERATE">SAMPLERATE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the samplerate of the audio file in Hertz.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SAMPLERATE)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SAMPLERATE%29">(SETF SAMPLERATE)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SAMPLES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASAMPLES">SAMPLES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the sample data of the audio file.
+
+This is a raw PCM data vector structured as audio frames, interleaving
+the channels in each frame according to the layout in CHANNEL-LAYOUT.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AAUDIO" class="xref">AUDIO (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SAMPLES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SAMPLES%29">(SETF SAMPLES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SEVERITY"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASEVERITY">SEVERITY</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the severity number of the entry.
+
+The more positive the number, the more severe, the more negative the
+more detailed it is meant to be, with 0 being treated as &quot;neutral&quot;.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SEVERITY)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SEVERITY%29">(SETF SEVERITY)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SHAPES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASHAPES">SHAPES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the vector of shapes that make up the physics model.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SHAPES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SHAPES%29">(SETF SHAPES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SIZE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASIZE">SIZE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the dimensions of the extent.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE-BOUNDS" class="xref">SHAPE-BOUNDS (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SIZE)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SIZE%29">(SETF SIZE)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:SOURCE"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASOURCE">SOURCE</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the source indicator of the entry.
+
+This is a string at most 255 characters long.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF SOURCE)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20SOURCE%29">(SETF SOURCE)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:START-TIME"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ASTART-TIME">START-TIME</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the starting time of the log.
+
+This is a UNIX timestamp.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIX-TO-UNIVERSAL-TIME" class="xref">UNIX-TO-UNIVERSAL-TIME</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIVERSAL-TO-UNIX-TIME" class="xref">UNIVERSAL-TO-UNIX-TIME</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG" class="xref">LOG (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF START-TIME)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20START-TIME%29">(SETF START-TIME)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:TENSOR"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATENSOR">TENSOR</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the inertia tensor matrix of the physics shape.
+
+The inertia tensor is a row-major 9-element single-float vector that
+stores the 3x3 inertia tensor matrix.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF TENSOR)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20TENSOR%29">(SETF TENSOR)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:TEXT"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXT">TEXT</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the string text of the element.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT" class="xref">TEXT (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ATEXT-SHAPE" class="xref">TEXT-SHAPE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF TEXT)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20TEXT%29">(SETF TEXT)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:TEXTURES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURES">TEXTURES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the vector of paths for the material's textures.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3ATEXTURE-TYPES" class="xref">TEXTURE-TYPES</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF TEXTURES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20TEXTURES%29">(SETF TEXTURES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:THICKNESS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATHICKNESS">THICKNESS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the thickness of the line.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALINE" class="xref">LINE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF THICKNESS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20THICKNESS%29">(SETF THICKNESS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:TIME"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATIME">TIME</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the time at which the entry was created.
+
+This is a UNIX timestamp.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIX-TO-UNIVERSAL-TIME" class="xref">UNIX-TO-UNIVERSAL-TIME</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AUNIVERSAL-TO-UNIX-TIME" class="xref">UNIVERSAL-TO-UNIX-TIME</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ALOG-ENTRY" class="xref">LOG-ENTRY (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF TIME)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20TIME%29">(SETF TIME)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:TOP-RADIUS"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATOP-RADIUS">TOP-RADIUS</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the top radius of the shape.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ACYLINDER" class="xref">CYLINDER (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APILL" class="xref">PILL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF TOP-RADIUS)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20TOP-RADIUS%29">(SETF TOP-RADIUS)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:TRANSFORM"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3ATRANSFORM">TRANSFORM</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the transform matrix of the shape.
+
+The transform matrix is a row-major 16-element single-float vector
+that stores the 4x4 affine transformation matrix to position the shape
+relative to origin of the entire model.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASHAPE" class="xref">SHAPE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APHYSICS-MODEL" class="xref">PHYSICS-MODEL (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF TRANSFORM)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20TRANSFORM%29">(SETF TRANSFORM)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:VERTICES"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTICES">VERTICES</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Access the vector of vertex attribute data.
+
+In the case of a MESH this is only position data.
+
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-ATTRIBUTES" class="xref">VERTEX-ATTRIBUTES</a>
+See <a href="#FUNCTION%20ORG.SHIRAKUMO.SF3%3AVERTEX-STRIDE" class="xref">VERTEX-STRIDE</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMODEL" class="xref">MODEL (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AMESH" class="xref">MESH (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF VERTICES)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20VERTICES%29">(SETF VERTICES)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:W"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AW">W</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the WIDTH extent of the size.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF W)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20W%29">(SETF W)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:WIDTH"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AWIDTH">WIDTH</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the width of the object.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AIMAGE" class="xref">IMAGE (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AVECTOR-GRAPHIC" class="xref">VECTOR-GRAPHIC (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3AELLIPSOID" class="xref">ELLIPSOID (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ABOX" class="xref">BOX (type)</a>
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3ASIZE" class="xref">SIZE (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF WIDTH)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20WIDTH%29">(SETF WIDTH)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:X"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AX">X</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the X position of the point.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOINT" class="xref">POINT (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF X)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20X%29">(SETF X)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:Y"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3AY">Y</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><pre>Accesses the Y position of the point.
+
+See <a href="#STRUCTURE%20ORG.SHIRAKUMO.SF3%3APOINT" class="xref">POINT (type)</a></pre></div> </article> </li>  <li> <article class="definition generic-function callable" id="GENERIC-FUNCTION ORG.SHIRAKUMO.SF3:(SETF Y)"> <header> <span class="visibility">EXTERNAL</span> <span class="type">GENERIC-FUNCTION</span> <h4 class="name"> <a href="#GENERIC-FUNCTION%20ORG.SHIRAKUMO.SF3%3A%28SETF%20Y%29">(SETF Y)</a> </h4> <ul class="qualifiers"></ul> <ul class="arguments">  <li class="argument">VALUE</li>    <li class="argument">ENTRY</li>  </ul>  </header> <div class="docstring"><i>No documentation provided.</i></div> </article> </li> </ul> </article> </li> </ul> </section>  </article> <script>window.addEventListener("DOMContentLoaded", function(){
+    var unmarkElement = function(el){
+        if(el.tagName === "mark" || el.tagName === "MARK"){
+            [].forEach.call(el.childNodes, function(child){
+                el.parentNode.insertBefore(child, el);
+            });
+            el.parentNode.removeChild(el);
+        }else if(el.parentNode.tagName === "mark"){
+            return unmarkElement(el.parentNode);
+        }
+        return null;
+    }
+
+    var unmarkAll = function(root){
+        root = root || document;
+        [].forEach.call(root.querySelectorAll("mark"), unmarkElement);
+    }
+    
+    var markElement = function(el){
+        if(el.parentNode.tagName === "mark" || el.parentNode.tagName === "MARK"){
+            return el.parentNode;
+        } else {
+            unmarkAll();
+            var marked = document.createElement("mark");
+            el.parentNode.insertBefore(marked, el);
+            marked.appendChild(el);
+            return marked;
+        }
+    }
+
+    var markFragmented = function(){
+        if(window.location.hash){
+            var el = document.getElementById(decodeURIComponent(window.location.hash.substr(1)));
+            if(el) markElement(el);
+        }
+    }
+
+    var registerXrefLink = function(link){
+        var el = document.getElementById(decodeURIComponent(link.getAttribute("href").substr(1)));
+        if(el){
+            link.addEventListener("click", function(){
+                markElement(el);
+            });
+        }
+    }
+
+    var registerXrefLinks = function(root){
+        root = root || document;
+        [].forEach.call(root.querySelectorAll("a.xref"), registerXrefLink);
+    }
+
+    markFragmented();
+    registerXrefLinks();
+}); </script> </body> </html> 
