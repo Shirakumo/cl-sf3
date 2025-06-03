@@ -131,6 +131,8 @@
    #:make-link-option
    #:target-option
    #:make-target-option
+   #:font-option
+   #:make-font-option
    #:markup
    #:make-markup
    #:text
@@ -142,7 +144,8 @@
    #:level
    #:address
    #:markup
-   #:text)
+   #:text
+   #:font)
   ;; vector-graphic.lisp
   (:export
    #:color

@@ -1007,6 +1007,19 @@ The address should be a string naming the target.
 
 See TARGET-OPTION (type)
 See LINK-OPTION (type)")
+
+  (type font-option
+    "Representation of a font change option.
+
+See FONT
+See MAKE-FONT-OPTION")
+
+  (function make-font-option
+    "Create a new font change markup option.
+
+The font should be a string naming the font family to use.
+
+See FONT-OPTION(type)")
   
   (type markup
     "Representation of a markup section.
@@ -1038,6 +1051,7 @@ OPTION should be a valid markup option type:
   HEADING-OPTION
   LINK-OPTION
   TARGET-OPTION
+  FONT-OPTION
 
 See MARKUP (type)")
   
@@ -1405,6 +1419,7 @@ See POINT (type)")
   (function font
     "Accesses the font-family descriptor of the text.
 
+See FONT-OPTION (type)
 See TEXT-SHAPE (type)")
   
   (function font-size

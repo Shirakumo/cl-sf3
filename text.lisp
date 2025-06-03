@@ -44,6 +44,14 @@
 
 (define-print-method target-option "~a" address)
 
+(bs:define-io-structure (font-option (:constructor %make-font-option))
+  (font-family (string uint16)))
+
+(defun make-font-option (font)
+  (%make-font-option :font font))
+
+(define-print-method font-option "~a" font)
+
 (bs:define-io-alias markup-option
     (case uint8
       (#x01 :bold)
@@ -55,7 +63,8 @@
       (#x07 size-option)
       (#x08 heading-option)
       (#x09 link-option)
-      (#x0A target-option)))
+      (#x0A target-option)
+      (#x0B font-option)))
 
 (bs:define-io-structure (markup (:constructor %make-markup))
   (start uint64)
@@ -89,7 +98,8 @@
                                                     ((eql :size) (apply #'make-size-option args))
                                                     ((eql :heading) (apply #'make-heading-option args))
                                                     ((eql :link) (apply #'make-link-option args))
-                                                    ((eql :target) (apply #'make-target-option args))))))))
+                                                    ((eql :target) (apply #'make-target-option args))
+                                                    ((eql :font) (apply #'make-font-option args))))))))
                       markup)))
     (%make-text :markup-options options
                 :markup-size (reduce #'+ options :key #'bs:octet-size)
@@ -100,6 +110,7 @@
 (define-accessors heading-option level)
 (define-accessors link-option address)
 (define-accessors target-option address)
+(define-accessors font-option font-family)
 (define-accessors markup start end option)
 (define-accessors text markup text)
-(define-delegates markup option r g b size level address)
+(define-delegates markup option r g b size level address font)
