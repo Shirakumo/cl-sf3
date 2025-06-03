@@ -43,7 +43,7 @@
   (:method ((_ (eql 'model))) "model/x.sf3")
   (:method ((_ (eql 'physics-model))) "model/x.sf3-physics")
   (:method ((_ (eql 'table))) "application/x.sf3-table")
-  (:method ((_ (eql 'text))) "text/x.sf3")
+  (:method ((_ (eql 'text))) "application/x.sf3-text")
   (:method ((_ (eql 'vector-graphic))) "image/x.sf3-vector"))
 
 (defun tell-sf3 (storage &rest args)
