@@ -54,9 +54,9 @@
   (%make-shape-bounds :point (make-point x y) :size (make-size w h)))
 
 (bs:define-io-structure (line (:constructor %make-line))
-  (points (vector point uint16))
   (color color)
-  (thickness float32))
+  (thickness float32)
+  (points (vector point uint16)))
 
 (defun make-line (points &key (thickness 1) (color (make-color 0 0 0)))
   (%make-line :points (coerce points 'vector)
@@ -66,8 +66,8 @@
 (define-print-method line "~f ~d" thickness (length (line-points object)))
 
 (bs:define-io-structure (rectangle (:constructor %make-rectangle))
-  (bounds shape-bounds)
-  (fill shape-fill))
+  (fill shape-fill)
+  (bounds shape-bounds))
 
 (defun make-rectangle (x y w h &rest fill-args)
   (%make-rectangle :bounds (make-shape-bounds x y w h)
@@ -76,8 +76,8 @@
 (define-print-method rectangle "~a ~a" location size)
 
 (bs:define-io-structure (circle (:constructor %make-circle))
-  (bounds shape-bounds)
-  (fill shape-fill))
+  (fill shape-fill)
+  (bounds shape-bounds))
 
 (defun make-circle (x y w h &rest fill-args)
   (%make-circle :bounds (make-shape-bounds x y w h)
@@ -86,8 +86,8 @@
 (define-print-method circle "~a ~a" location size)
 
 (bs:define-io-structure (polygon (:constructor %make-polygon))
-  (points (vector point uint16))
-  (fill shape-fill))
+  (fill shape-fill)
+  (points (vector point uint16)))
 
 (defun make-polygon (points &rest fill-args)
   (%make-polygon :points (coerce points 'vector)
@@ -96,8 +96,8 @@
 (define-print-method polygon "~d" (length (polygon-points object)))
 
 (bs:define-io-structure (curve (:constructor %make-curve))
-  (points (vector point uint16))
-  (fill shape-fill))
+  (fill shape-fill)
+  (points (vector point uint16)))
 
 (defun make-curve (points &rest fill-args)
   (%make-curve :points (coerce points 'vector)
