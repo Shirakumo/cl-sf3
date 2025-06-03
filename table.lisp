@@ -1,9 +1,9 @@
 (in-package #:org.shirakumo.sf3)
 
 (bs:define-io-structure (column-spec (:constructor %make-column-spec))
-  (name (string uint16))
   (length uint32)
-  (kind uint8))
+  (kind uint8)
+  (name (string uint16)))
 
 (defun make-column-spec (name &optional (type :string) length)
   (%make-column-spec :name name
