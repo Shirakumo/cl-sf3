@@ -82,7 +82,7 @@
         (write-sf3 object stream))
       (let ((header (make-sf3-file-header (type-of object))))
         (declare (dynamic-extent header))
-        (multiple-value-bind (struct state) (apply #'write-sf3-file-header header storage args)
+        (multiple-value-bind (state) (apply #'write-sf3-file-header header storage args)
           (etypecase storage
             (stream)
             (vector
@@ -90,7 +90,7 @@
             (cffi:foreign-pointer
              (setf storage state)
              (decf (car args) (bs:octet-size header))))
-          (ecase (sf3-file-header-kind struct)
+          (ecase (sf3-file-header-kind header)
             (archive (apply #'write-archive object storage args))
             (audio (apply #'write-audio object storage args))
             (image (apply #'write-image object storage args))
