@@ -81,5 +81,6 @@
   :serial T
   :components ((:file "test"))
   :depends-on (:cl-sf3
-               :parachute)
+               :parachute
+               :pathname-utils)
   :perform (asdf:test-op (op c) (uiop:symbol-call :parachute :test :org.shirakumo.sf3.test)))
