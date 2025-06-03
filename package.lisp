@@ -7,7 +7,7 @@
   ;; toolkit.lisp
   (:export
    #:unix-to-universal-time
-   #:universal-time-to-unix)
+   #:universal-to-unix-time)
   ;; archive.lisp
   (:export
    #:archive-meta-entry

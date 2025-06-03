@@ -5,7 +5,7 @@
   (function unix-to-universal-time
     "Convert a UNIX timestamp to a Common Lisp universal-time timestamp")
 
-  (function universal-time-to-unix
+  (function universal-to-unix-time
     "Convert a Common Lisp universal-time timestamp to a UNIX timestamp"))
 
 ;; archive.lisp

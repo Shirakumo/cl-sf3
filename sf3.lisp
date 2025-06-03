@@ -23,7 +23,7 @@
 (define-accessors sf3-file-header kind checksum)
 
 (defgeneric file-extension (object)
-  (:method ((_ bs::io-structure-object)) (file-extension (type-of object)))
+  (:method ((_ bs::io-structure-object)) (file-extension (type-of _)))
   (:method ((_ (eql 'archive))) "ar.sf3")
   (:method ((_ (eql 'audio))) "au.sf3")
   (:method ((_ (eql 'image))) "img.sf3")
@@ -35,7 +35,7 @@
   (:method ((_ (eql 'vector-graphic))) "vec.sf3"))
 
 (defgeneric mime-type (object)
-  (:method ((_ bs::io-structure-object)) (mime-type (type-of object)))
+  (:method ((_ bs::io-structure-object)) (mime-type (type-of _)))
   (:method ((_ (eql 'archive))) "application/x.sf3-archive")
   (:method ((_ (eql 'audio))) "audio/x.sf3")
   (:method ((_ (eql 'image))) "image/x.sf3")

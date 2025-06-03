@@ -55,7 +55,7 @@
                            (:BGRA #x34)
                            (:CMYK #x44)
                            (:KYMC #x54))
-               :format (lisp-type->bs-type (array-element-type pixels))
+               :pixel-format (lisp-type->bs-type (array-element-type pixels))
                :pixels pixels))
 
 (defun pixel-type (image)
