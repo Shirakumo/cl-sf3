@@ -8,7 +8,7 @@
   (category (string uint8))
   (message (string uint16)))
 
-(defun make-log-entry (message &key (time (get-universal-time))
+(defun make-log-entry (message &key (time 0)
                                     (severity 0)
                                     (source "")
                                     (category ""))
@@ -17,7 +17,7 @@
                             1 1 (babel:string-size-in-octets category :encoding :utf-8)
                             2 1 (babel:string-size-in-octets message :encoding :utf-8))
                    :message message
-                   :time (universal-to-unix-time time)
+                   :time time
                    :severity severity
                    :source source
                    :category category))
@@ -88,8 +88,13 @@
     (log-chunk-append-entry chunk entry)
     log))
 
-(defun log (log message &rest entry-args)
-  (log-append-entry-extend log (apply #'make-log-entry message entry-args)))
+(defun log (log message &rest entry-args &key time &allow-other-keys)
+  (if time
+      (log-append-entry-extend log (apply #'make-log-entry message entry-args))
+      (multiple-value-bind (time subsecs) (org.shirakumo.precise-time:get-precise-time)
+        (let ((secs (- (universal-to-unix-time time) (log-start-time log)))
+              (millis (truncate (* subsecs (/ 1000 ORG.SHIRAKUMO.PRECISE-TIME:PRECISE-TIME-UNITS-PER-SECOND)))))
+          (log-append-entry-extend log (apply #'make-log-entry message :time (+ millis (* 1000 secs)) entry-args))))))
 
 (define-print-method log "~a ~d" (format-time (log-start-time object)) chunk-count)
 

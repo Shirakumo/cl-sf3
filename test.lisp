@@ -111,17 +111,19 @@
     (output (sf3:make-log
              :entries 0)
             "empty-chunk")
-    (output (sf3:log
-             (sf3:make-log :entries 1) "Hello" :severity 10 :source "sf3" :category "test")
+    (output (let ((log (sf3:make-log :entries 1)))
+              (sf3:log log "Hello" :severity 10 :source "sf3" :category "test"))
             "filled-message")
-    (output (sf3:log
-             (sf3:make-log :entries 2) "Hello")
+    (output (let ((log (sf3:make-log :entries 2)))
+              (sf3:log log "Hello"))
             "partial-chunk")
-    (output (sf3:log
-             (sf3:log (sf3:make-log :entries 1) "Hello") "There")
+    (output (let ((log (sf3:make-log :entries 1)))
+              (sf3:log log "Hello")
+              (sf3:log-append-chunk log :entries 1)
+              (sf3:log log "There"))
             "two-chunks")
-    (output (sf3:log
-             (sf3:make-log :entries 1) "Hello")
+    (output (let ((log (sf3:make-log :entries 1)))
+              (sf3:log log "Hello"))
             "one-message")
 
     (output (sf3:make-table

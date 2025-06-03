@@ -49,7 +49,8 @@
 (asdf:defsystem cl-sf3/log
   :description "Implementation of the SF3 log format"
   :components ((:file "log"))
-  :depends-on (:cl-sf3/core))
+  :depends-on (:cl-sf3/core
+               :precise-time))
 
 (asdf:defsystem cl-sf3/model
   :description "Implementation of the SF3 model format"
