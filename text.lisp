@@ -48,7 +48,7 @@
   (font-family (string uint16)))
 
 (defun make-font-option (font)
-  (%make-font-option :font font))
+  (%make-font-option :font-family font))
 
 (define-print-method font-option "~a" font)
 
@@ -89,17 +89,17 @@
                           (cons 
                            (destructuring-bind (start end option &rest args) x
                              (assert (<= start end))
-                             (make-markup :start start :end end
-                                          :option (etypecase option
-                                                    ((or color-option size-option heading-option link-option target-option)
-                                                     option)
-                                                    ((member :bold :italic :underline :strike :mono) option)
-                                                    ((eql :color) (apply #'make-color-option args))
-                                                    ((eql :size) (apply #'make-size-option args))
-                                                    ((eql :heading) (apply #'make-heading-option args))
-                                                    ((eql :link) (apply #'make-link-option args))
-                                                    ((eql :target) (apply #'make-target-option args))
-                                                    ((eql :font) (apply #'make-font-option args))))))))
+                             (make-markup start end
+                                          (etypecase option
+                                            ((or color-option size-option heading-option link-option target-option)
+                                             option)
+                                            ((member :bold :italic :underline :strike :mono) option)
+                                            ((eql :color) (apply #'make-color-option args))
+                                            ((eql :size) (apply #'make-size-option args))
+                                            ((eql :heading) (apply #'make-heading-option args))
+                                            ((eql :link) (apply #'make-link-option args))
+                                            ((eql :target) (apply #'make-target-option args))
+                                            ((eql :font) (apply #'make-font-option args))))))))
                       markup)))
     (%make-text :markup-options options
                 :markup-size (reduce #'+ options :key #'bs:octet-size)
@@ -112,5 +112,5 @@
 (define-accessors target-option address)
 (define-accessors font-option font-family)
 (define-accessors markup start end option)
-(define-accessors text markup text)
+(define-accessors text (markup markup-options) text)
 (define-delegates markup option r g b size level address font)

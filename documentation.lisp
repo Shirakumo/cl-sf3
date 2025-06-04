@@ -1108,7 +1108,12 @@ See TARGET-OPTION (type)")
     "Accesses the string text of the element.
 
 See TEXT (type)
-See TEXT-SHAPE (type)"))
+See TEXT-SHAPE (type)")
+
+  (function markup
+    "Access the vector of markup options.
+
+See TEXT (type)"))
 
 ;; vector-graphic.lisp
 (docs:define-docs
