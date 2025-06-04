@@ -7,12 +7,20 @@
 
 (defun make-column-spec (name &optional (type :string) length)
   (%make-column-spec :name name
-                     :length (if (eql :string type)
-                                 (or length 64)
-                                 (* (or length 1) (bs:octet-size type)))
+                     :length (case type
+                               (:string
+                                (or length 64))
+                               (:timestamp
+                                (* (or length 1) (bs:octet-size :unix-time-u64)))
+                               (:high-resolution-timestamp
+                                (* (or length 1) (bs:octet-size 'high-resolution-timestamp)))
+                               (:boolean
+                                (* (or length 1) (bs:octet-size 'boolean)))
+                               (T
+                                (* (or length 1) (bs:octet-size type))))
                      :kind (type->column-spec-kind type)))
 
-(define-print-method column-spec "~s ~d ~a" name length type)
+(define-print-method column-spec "~s ~d ~a" name length kind)
 
 (define-accessors column-spec name (size length) kind)
 
