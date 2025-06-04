@@ -9,7 +9,7 @@
   (vertices (vector float32 uint32)))
 
 (defun make-model (faces vertices &key (vertex-attributes '(:position)) material)
-  (let ((textures (coerce (loop for k in '(:albedo :normal :metalness :roughness :occlusion :emission)
+  (let ((textures (coerce (loop for k in '(:albedo :normal :metallic :metalness :roughness :occlusion :emission)
                                 for v = (getf material k)
                                 when v collect v)
                           'vector))
