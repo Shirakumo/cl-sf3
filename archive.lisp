@@ -1,7 +1,7 @@
 (in-package #:org.shirakumo.sf3)
 
 (bs:define-io-structure archive-meta-entry
-  (modification-time sint64)
+  (modification-time bs:unix-time-s64)
   (checksum uint32)
   (mime-type (string uint8))
   (path (string uint16)))
@@ -34,7 +34,7 @@
     archive))
 
 (defun %add-file (contents path mime modification-time archive)
-  (let ((entry (make-archive-meta-entry :modification-time (universal-to-unix-time modification-time)
+  (let ((entry (make-archive-meta-entry :modification-time modification-time
                                         :checksum (crc32 contents)
                                         :mime-type (or mime "application/octet-stream")
                                         :path path)))
@@ -92,7 +92,7 @@
     (alexandria:write-byte-vector-into-file (aref (archive-files archive) file) path :if-exists if-exists)
     (when preserve-modification-time
       (setf (org.shirakumo.file-attributes:modification-time path)
-            (unix-to-universal-time (archive-meta-entry-modification-time meta))))
+            (archive-meta-entry-modification-time meta)))
     (when verify
       (assert (= (archive-meta-entry-checksum meta) (crc32 path))))
     path))

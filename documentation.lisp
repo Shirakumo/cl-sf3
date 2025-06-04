@@ -52,10 +52,8 @@ See ADD-FILE")
   (function modification-time
     "Access the modification time of the metadata entry.
 
-The modification time is a UNIX timestamp.
+The modification time is a universal-time timestamp.
 
-See UNIX-TO-UNIVERSAL-TIME
-See UNIVERSAL-TO-UNIX-TIME
 See ARCHIVE-META-ENTRY (type)")
   
   (function checksum
@@ -356,8 +354,7 @@ See MAKE-LOG-ENTRY")
     "Create a new log entry.
 
 The size of the entry is automatically computed based on the other
-attributes. The TIME is given in UNIVERSAL-TIME format and
-automatically converted to UNIX time for you.
+attributes. The TIME is given in UNIVERSAL-TIME format.
 
 See LOG-ENTRY (type)")
   

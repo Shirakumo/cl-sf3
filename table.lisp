@@ -52,6 +52,16 @@
     (:high-resolution-timestamp #x58)
     (:boolean #x61)))
 
+(bs:define-io-type (bs:io-timestamp high-resolution-timestamp)
+  :epoch :unix :octet-size 8 :resolution 1000000000)
+
+(macrolet ((define-octet-accessor (backend io-type)
+             (let ((type (bs:io-type io-type)))
+               `(progn
+                  ,(bs:read-defun backend type io-type)
+                  ,(bs:write-defun backend type `(setf ,io-type))))))
+  (define-octet-accessor bs:io-octet-vector high-resolution-timestamp))
+
 (defun column-spec-reader (spec)
   (ecase (column-spec-kind spec)
     (#x01 #'bst:uint8/io-octet-vector)
@@ -66,8 +76,8 @@
     (#x24 #'bst:float32/io-octet-vector)
     (#x28 #'bst:float64/io-octet-vector)
     (#x31 #'bst:utf8-string/io-octet-vector)
-    (#x48 #'bst:uint64/io-octet-vector)
-    (#x58 #'bst:uint64/io-octet-vector)
+    (#x48 #'bst:unix-time-s64/io-octet-vector)
+    (#x58 #'high-resolution-timestamp)
     (#x61 #'bst:boolean/io-octet-vector)))
 
 (defun column-spec-writer (spec)
@@ -84,8 +94,8 @@
     (#x24 #'(setf bst:float32/io-octet-vector))
     (#x28 #'(setf bst:float64/io-octet-vector))
     (#x31 #'(setf bst:utf8-string/io-octet-vector))
-    (#x48 #'(setf bst:uint64/io-octet-vector))
-    (#x58 #'(setf bst:uint64/io-octet-vector))
+    (#x48 #'(setf bst:unix-time-s64/io-octet-vector))
+    (#x58 #'(setf high-resolution-timestamp))
     (#x61 #'(setf bst:boolean/io-octet-vector))))
 
 (defun column-spec-element-size (spec)
