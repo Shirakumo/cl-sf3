@@ -64,6 +64,30 @@
 (defun compile-sample-files/model (dir)
   (flet ((output (object name)
            (output-sample-file object name dir)))
+    (let ((a (sf3:make-model
+              '(0 1 2 2 1 3)
+              '(0.0 0.0 0.0 0.0 0.0
+                1.0 0.0 0.0 1.0 0.0
+                0.0 1.0 0.0 0.0 1.0
+                1.0 1.0 0.0 1.0 1.0)
+              :vertex-attributes '(:position :uv)))
+          (b (sf3:make-model
+              '(0 1 2 2 1 3)
+              '(2.0 0.0 0.0 0.0 0.0
+                3.0 0.0 0.0 1.0 0.0
+                2.0 1.0 0.0 0.0 1.0
+                3.0 1.0 0.0 1.0 1.0)
+              :vertex-attributes '(:position :uv))))
+      (output (sf3:make-archive
+               `((,(sf3:write-sf3 a 'vector)
+                  :path "a"
+                  :mime-type "model/x.sf3"
+                  :modification-time #.(encode-universal-time 0 0 0 1 1 2025 0))
+                 (,(sf3:write-sf3 b 'vector)
+                  :path "b"
+                  :mime-type "model/x.sf3"
+                  :modification-time #.(encode-universal-time 0 0 0 1 1 2025 0))))
+              "multiple"))
     (output (sf3:make-model
              '(0 1 2 2 1 3)
              '(0.0 0.0 0.0  0.0 0.0  0.0 0.0 -1.0
