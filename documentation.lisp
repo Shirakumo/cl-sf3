@@ -1512,6 +1512,13 @@ necessary. The following backends are supported:
   STREAM
   OCTET-VECTOR (optionally accepts :START and :END key arguments)
   FOREIGN-POINTER (requires a SIZE argument)
+  'VECTOR (automatically allocates an octet-vector of appropriate
+           size)
+
+When serialising to OCTET-VECTOR or FOREIGN-POINTER, you can use the
+ORG.SHIRAKUMO.BINARY-STRUCTURES:OCTET-SIZE function to retrieve the
+size of the object. You need an extra 16 bytes to that, however, to
+store the SF3 file header.
 
 If successful returns the storage.
 If serialisation fails, an error is signalled.
@@ -1524,7 +1531,8 @@ See MODEL (type)
 See PHYSICS-MODEL (type)
 See TABLE (type)
 See TEXT (type)
-See VECTOR-GRAPHIC (type)")
+See VECTOR-GRAPHIC (type)
+See ORG.SHIRAKUMO.BINARY-STRUCTURES:OCTET-SIZE")
   
   (function tell-sf3
     "Determine the type of SF3 file within the storage.

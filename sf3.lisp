@@ -75,29 +75,35 @@
           (vector-graphic (apply #'read-vector-graphic storage args))))))
 
 (defun write-sf3 (object storage &rest args)
-  (if (pathnamep storage)
-      (with-open-file (stream storage :element-type '(unsigned-byte 8)
-                                      :direction :output
-                                      :if-exists (getf args :if-exists :error))
-        (write-sf3 object stream))
-      (let ((header (make-sf3-file-header (type-of object))))
-        (declare (dynamic-extent header))
-        (multiple-value-bind (state) (apply #'write-sf3-file-header header storage args)
-          (etypecase storage
-            (stream)
-            (vector
-             (setf (getf args :start) state))
-            (cffi:foreign-pointer
-             (setf storage state)
-             (decf (car args) (bs:octet-size header))))
-          (ecase (sf3-file-header-kind header)
-            (archive (apply #'write-archive object storage args))
-            (audio (apply #'write-audio object storage args))
-            (image (apply #'write-image object storage args))
-            (log (apply #'write-log object storage args))
-            (model (apply #'write-model object storage args))
-            (physics-model (apply #'write-physics-model object storage args))
-            (table (apply #'write-table object storage args))
-            (text (apply #'write-text object storage args))
-            (vector-graphic (apply #'write-vector-graphic object storage args))))
-        storage)))
+  (etypecase storage
+    (pathname
+     (with-open-file (stream storage :element-type '(unsigned-byte 8)
+                                     :direction :output
+                                     :if-exists (getf args :if-exists :error))
+       (write-sf3 object stream)))
+    ((eql vector)
+     (let ((array (make-array (+ 16 (bs:octet-size object)) :element-type '(unsigned-byte 8))))
+       (apply #'write-sf3 object array args)
+       array))
+    (T
+     (let ((header (make-sf3-file-header (type-of object))))
+       (declare (dynamic-extent header))
+       (multiple-value-bind (state) (apply #'write-sf3-file-header header storage args)
+         (etypecase storage
+           (stream)
+           (vector
+            (setf (getf args :start) state))
+           (cffi:foreign-pointer
+            (setf storage state)
+            (decf (car args) (bs:octet-size header))))
+         (ecase (sf3-file-header-kind header)
+           (archive (apply #'write-archive object storage args))
+           (audio (apply #'write-audio object storage args))
+           (image (apply #'write-image object storage args))
+           (log (apply #'write-log object storage args))
+           (model (apply #'write-model object storage args))
+           (physics-model (apply #'write-physics-model object storage args))
+           (table (apply #'write-table object storage args))
+           (text (apply #'write-text object storage args))
+           (vector-graphic (apply #'write-vector-graphic object storage args))))
+       storage))))
