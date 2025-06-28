@@ -43,16 +43,27 @@
 (defun crc32 (file &optional (start 0) end)
   (declare (optimize speed (safety 1)))
   (let ((crc #xffffffff))
-    (declare (type (unsigned-byte 32) crc))
+    (declare (type (unsigned-byte 32) crc start))
     (etypecase file
       ((or pathname string)
        (with-open-file (stream file :element-type '(unsigned-byte 8))
          (file-position stream start)
-         (handler-case (if end
-                           (loop repeat (- end start)
-                                 do (setf crc (crc32-rotate crc (read-byte stream))))
-                           (loop (setf crc (crc32-rotate crc (read-byte stream)))))
-           (end-of-file ()))))
+         (etypecase end
+           ((unsigned-byte 32)
+            (loop repeat (- end start)
+                  do (setf crc (crc32-rotate crc (read-byte stream)))))
+           (null
+            (handler-case (loop (setf crc (crc32-rotate crc (read-byte stream))))
+              (end-of-file ()))))))
+      (stream
+       (file-position file start)
+       (etypecase end
+         ((unsigned-byte 32)
+          (loop repeat (- end start)
+                do (setf crc (crc32-rotate crc (read-byte file)))))
+         (null
+          (handler-case (loop (setf crc (crc32-rotate crc (read-byte file))))
+            (end-of-file ())))))
       ((vector (unsigned-byte 8))
        (loop for i from start below (or end (length file))
              for byte = (aref file i)

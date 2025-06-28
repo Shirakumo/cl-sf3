@@ -79,7 +79,7 @@
   (etypecase storage
     (pathname
      (with-open-file (stream storage :element-type '(unsigned-byte 8)
-                                     :direction :output
+                                     :direction :io
                                      :if-exists (getf args :if-exists :error))
        (write-sf3 object stream)))
     ((eql vector)
@@ -89,23 +89,45 @@
     (T
      (let ((header (make-sf3-file-header (type-of object))))
        (declare (dynamic-extent header))
-       (multiple-value-bind (state) (apply #'write-sf3-file-header header storage args)
+       (let ((start-state (apply #'write-sf3-file-header header storage args)))
          (etypecase storage
-           (stream)
+           (stream
+            (setf start-state (file-position storage)))
            (vector
-            (setf (getf args :start) state))
+            (setf (getf args :start) start-state))
            #+cffi
            (cffi:foreign-pointer
-            (setf storage state)
+            (setf storage start-state)
             (decf (car args) (bs:octet-size header))))
-         (ecase (sf3-file-header-kind header)
-           (archive (apply #'write-archive object storage args))
-           (audio (apply #'write-audio object storage args))
-           (image (apply #'write-image object storage args))
-           (log (apply #'write-log object storage args))
-           (model (apply #'write-model object storage args))
-           (physics-model (apply #'write-physics-model object storage args))
-           (table (apply #'write-table object storage args))
-           (text (apply #'write-text object storage args))
-           (vector-graphic (apply #'write-vector-graphic object storage args))))
+         (let ((end-state (ecase (sf3-file-header-kind header)
+                            (archive (apply #'write-archive object storage args))
+                            (audio (apply #'write-audio object storage args))
+                            (image (apply #'write-image object storage args))
+                            (log (apply #'write-log object storage args))
+                            (model (apply #'write-model object storage args))
+                            (physics-model (apply #'write-physics-model object storage args))
+                            (table (apply #'write-table object storage args))
+                            (text (apply #'write-text object storage args))
+                            (vector-graphic (apply #'write-vector-graphic object storage args)))))
+           (etypecase storage
+             (stream
+              (cond ((not (input-stream-p storage))
+                     (warn "Can't backfill CRC32 since the stream is not an input stream."))
+                    (T
+                     (finish-output storage)
+                     (let* ((start start-state)
+                            (end (file-position storage))
+                            (crc (crc32 storage start end)))
+                       (file-position storage (- start 5))
+                       (setf (bst:uint32/io-stream storage) crc)))))
+             (vector
+              (let ((start (getf args :start))
+                    (end end-state))
+                (setf (bst:uint32/io-octet-vector storage (- start 5) start)
+                      (crc32 storage start end))))
+             #+cffi
+             (cffi:foreign-pointer
+              (let ((size (- (cffi:pointer-address end-state) (cffi:pointer-address storage))))
+                (setf (bst:uint32/io-foreign-pointer (cffi:inc-pointer storage -5) 4)
+                      (crc32 storage 0 size)))))))
        storage))))
