@@ -40,18 +40,27 @@
 (defun crc32-rotate (crc byte)
   (logxor (ldb (byte 24 8) crc) (aref +crc32/table+ (ldb (byte 8 0) (logxor crc byte)))))
 
-(defun crc32 (file)
+(defun crc32 (file &optional (start 0) end)
   (declare (optimize speed (safety 1)))
   (let ((crc #xffffffff))
     (declare (type (unsigned-byte 32) crc))
     (etypecase file
       ((or pathname string)
        (with-open-file (stream file :element-type '(unsigned-byte 8))
-         (handler-case (loop (setf crc (crc32-rotate crc (read-byte stream))))
+         (file-position stream start)
+         (handler-case (if end
+                           (loop repeat (- end start)
+                                 do (setf crc (crc32-rotate crc (read-byte stream))))
+                           (loop (setf crc (crc32-rotate crc (read-byte stream)))))
            (end-of-file ()))))
       ((vector (unsigned-byte 8))
-       (loop for byte across file
-             do (setf crc (crc32-rotate crc byte)))))
+       (loop for i from start below (or end (length file))
+             for byte = (aref file i)
+             do (setf crc (crc32-rotate crc byte))))
+      #+cffi
+      (cffi:foreign-pointer
+       (loop for i from start below (or end (error "END must be given for pointers."))
+             do (setf crc (crc32-rotate crc (cffi:mem-aref file :uint8 i))))))
     (logxor crc #xFFFFFFFF)))
 
 (declaim (inline universal-to-unix-time))

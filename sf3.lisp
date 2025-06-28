@@ -60,6 +60,7 @@
           (stream)
           (vector
            (setf (getf args :start) state))
+          #+cffi
           (cffi:foreign-pointer
            (setf storage state)
            (decf (car args) (bs:octet-size header))))
@@ -93,6 +94,7 @@
            (stream)
            (vector
             (setf (getf args :start) state))
+           #+cffi
            (cffi:foreign-pointer
             (setf storage state)
             (decf (car args) (bs:octet-size header))))
