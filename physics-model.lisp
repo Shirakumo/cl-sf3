@@ -78,7 +78,7 @@
           (#x04 pill)
           (#x05 mesh))))
 
-(define-print-method shape "~a" (type-of data))
+(define-print-method shape "~a" (type-of object))
 
 (bs:define-io-structure (physics-model (:constructor %make-physics-model))
   (mass float32)

@@ -48,7 +48,7 @@
 
 (defun tell-sf3 (storage &rest args)
   (let ((values (multiple-value-list (apply #'read-sf3-file-header storage args))))
-    (values-list (list* (sf3-file-header-type (first values)) (rest values)))))
+    (values-list (list* (sf3-file-header-kind (first values)) (rest values)))))
 
 (defun read-sf3 (storage &rest args)
   (if (pathnamep storage)

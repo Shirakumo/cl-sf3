@@ -148,7 +148,7 @@
 (define-accessors table column-count row-count column-specs row-data)
 
 (defun row (table row)
-  (loop for i from 0 below (table-column-count table)
+  (loop for column from 0 below (table-column-count table)
         collect (cell table row column)))
 
 (defun cell (table row column)

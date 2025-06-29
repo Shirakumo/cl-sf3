@@ -38,7 +38,8 @@
 
 (declaim (inline crc32-rotate))
 (defun crc32-rotate (crc byte)
-  (logxor (ldb (byte 24 8) crc) (aref +crc32/table+ (ldb (byte 8 0) (logxor crc byte)))))
+  (logxor (ldb (byte 24 8) crc) 
+          (aref +crc32/table+ (ldb (byte 8 0) (logxor crc byte)))))
 
 (defun crc32 (file &optional (start 0) end)
   (declare (optimize speed (safety 1)))
