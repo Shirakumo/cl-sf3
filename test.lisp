@@ -45,21 +45,34 @@
   (flet ((output (object name)
            (output-sample-file object name dir)))
     (output (sf3:make-image
-             (make-array 3 :element-type '(unsigned-byte 8))
+             (make-array 3 :element-type '(unsigned-byte 8) :initial-contents
+                         '(0 136 238))
              1 1 :pixel-type :rgb)
             "rgb-u8-1x1")
     (output (sf3:make-image
-             (make-array 1 :element-type 'single-float)
+             (make-array 1 :element-type 'single-float :initial-contents
+                         '(2.0))
              1 1 :pixel-type :v)
             "v-f4-1x1")
     (output (sf3:make-image
-             (make-array 16 :element-type 'single-float)
+             (make-array 16 :element-type 'single-float :initial-contents
+                         '(0.2f0 0.5f0 0.5f0 0.2f0
+                           0.5f0 1.0f0 1.0f0 0.5f0
+                           0.5f0 1.0f0 1.0f0 0.5f0
+                           0.2f0 0.5f0 0.5f0 0.2f0))
              4 4 :pixel-type :v)
             "v-f4-4x4")
     (output (sf3:make-image
-             (make-array 1 :element-type '(unsigned-byte 8))
+             (make-array 1 :element-type '(unsigned-byte 8) :initial-contents
+                         '(255))
              1 1 :pixel-type :v)
-            "v-u8-1x1")))
+            "v-u8-1x1")
+    (output (sf3:make-image
+             (make-array 8 :element-type '(unsigned-byte 16) :initial-contents
+                         '(0 0 0 65535
+                           65535 65535 65535 0))
+             1 1 :depth 2 :pixel-type :cmyk)
+            "cmyk-u16-1x1x2")))
 
 (defun compile-sample-files/model (dir)
   (flet ((output (object name)
